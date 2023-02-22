@@ -45,7 +45,7 @@ public class CameraScript : MonoBehaviour
 
     private void BorderMovement()
     {
-
+        
     }
 
 }

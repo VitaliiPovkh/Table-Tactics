@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class InputScript : MonoBehaviour
 {
     [SerializeField] private Image selectionRect;
+    [SerializeField] private RectTransform guiCanvasRect;
     [SerializeField] private List<Unit> selectedUnits = new List<Unit>();
 
 
@@ -15,6 +16,7 @@ public class InputScript : MonoBehaviour
 
     private Vector2 startWorldMousePos;
     private Vector2 currentWorldMousePos;
+
 
 
     private void Start()
@@ -37,12 +39,10 @@ public class InputScript : MonoBehaviour
         {
             selectionRect.gameObject.SetActive(true);
             startMousePos = Input.mousePosition;
-            startMousePos.y = Mathf.Abs(Screen.height - startMousePos.y);
         }
         if (Input.GetMouseButton(0))
         {
             currentMousePos = Input.mousePosition;
-            currentMousePos.y = Mathf.Abs(Screen.height - currentMousePos.y);
             UpdateSelection();
         }
         if (Input.GetMouseButtonUp(0))
@@ -55,12 +55,18 @@ public class InputScript : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            float inset = Mathf.Min(startMousePos.x, currentMousePos.x);
-            float size = Mathf.Abs(currentMousePos.x - startMousePos.x);
+            Vector2 screenStartMousePos = startMousePos;
+            Vector2 screenCurrentMousePos = currentMousePos;
+
+            screenStartMousePos.y = Mathf.Abs(Screen.height - screenStartMousePos.y);
+            screenCurrentMousePos.y = Mathf.Abs(Screen.height - screenCurrentMousePos.y);
+
+            float inset = Mathf.Min(screenStartMousePos.x, screenCurrentMousePos.x);
+            float size = Mathf.Abs(screenCurrentMousePos.x - screenStartMousePos.x);
             selectionRect.rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, inset, size);
 
-            inset = Mathf.Min(startMousePos.y, currentMousePos.y);
-            size = Mathf.Abs(currentMousePos.y - startMousePos.y);
+            inset = Mathf.Min(screenStartMousePos.y, screenCurrentMousePos.y);
+            size = Mathf.Abs(screenCurrentMousePos.y - screenStartMousePos.y);
             selectionRect.rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, inset, size);
         }
     }
@@ -69,15 +75,8 @@ public class InputScript : MonoBehaviour
     {
         UnselectUnits();
 
-        //Баг с выделением
         startWorldMousePos = Camera.main.ScreenToWorldPoint(startMousePos);
-        startWorldMousePos.y *= -1;
         currentWorldMousePos = Camera.main.ScreenToWorldPoint(currentMousePos);
-        currentWorldMousePos.y *= -1;
-
-
-        Debug.Log($"Start pos {startWorldMousePos}");
-        Debug.Log($"Current pos {currentWorldMousePos}");
 
         Collider2D[] colliders = Physics2D.OverlapAreaAll(startWorldMousePos, currentWorldMousePos);
         foreach (Collider2D collider in colliders)
