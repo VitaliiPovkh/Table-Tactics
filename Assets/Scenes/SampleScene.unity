@@ -123,6 +123,65 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9783779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9783780}
+  - component: {fileID: 9783781}
+  m_Layer: 6
+  m_Name: map_borders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9783780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9783779}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 776199608}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &9783781
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9783779}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 134.41707, y: 89.021385}
+  - {x: -129.62598, y: 89.039604}
+  - {x: -129.65173, y: -89.0048}
+  - {x: 134.39803, y: -88.99886}
+  - {x: 134.36182, y: 88.771}
+  - {x: 134.75581, y: 89.16276}
+  - {x: 132.3871, y: 89.6259}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1001 &121174059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -523,16 +582,17 @@ PolygonCollider2D:
       - {x: 94.17252, y: 66.59458}
       - {x: 71.9974, y: 79.93733}
       - {x: 58.255386, y: 90.13325}
-      - {x: 135.47198, y: 90.21702}
-      - {x: 135.6631, y: -90.02025}
-      - {x: 142.98758, y: -102.01122}
-      - {x: 145.42375, y: 90.36458}
-      - {x: 144.89359, y: 98.41296}
-      - {x: 64.440544, y: 99.921814}
-      - {x: -138.59322, y: 101.72215}
-      - {x: -137.08928, y: -101.13385}
-      - {x: 143.17021, y: -102.787285}
-      - {x: 135.73488, y: -90.827324}
+      - {x: 56.529274, y: 104.93204}
+      - {x: 160.7805, y: 101.46524}
+      - {x: 182.76503, y: -137.1222}
+      - {x: 194.3076, y: -157.54933}
+      - {x: 175.82619, y: 113.87928}
+      - {x: -75.24524, y: 121.01554}
+      - {x: -162.33751, y: 123.49098}
+      - {x: -152.55559, y: -143.31468}
+      - {x: 153.71542, y: -154.81032}
+      - {x: 153.31023, y: -142.85036}
+      - {x: -142.42119, y: -136.45053}
       - {x: -122.87549, y: -90.6153}
       - {x: -114.904594, y: -81.5971}
       - {x: -101.841866, y: -71.00314}
@@ -540,6 +600,8 @@ PolygonCollider2D:
       - {x: -101.00523, y: -55.02533}
       - {x: -109.79409, y: -59.109646}
       - {x: -131.26189, y: -77.45669}
+      - {x: -143.89157, y: -123.11947}
+      - {x: -148.57146, y: 13.528582}
       - {x: -131.07042, y: 10.404798}
       - {x: -126.082436, y: 4.3543677}
       - {x: -120.13891, y: 0.48683882}
@@ -547,7 +609,9 @@ PolygonCollider2D:
       - {x: -106.180984, y: -3.159442}
       - {x: -120.99339, y: 8.6753645}
       - {x: -131.22781, y: 17.710346}
-      - {x: -131.18987, y: 91.30084}
+      - {x: -151.07874, y: 24.813545}
+      - {x: -144.22375, y: 110.605606}
+      - {x: 43.2004, y: 105.125656}
       - {x: 43.82725, y: 90.18362}
       - {x: 46.297546, y: 83.08894}
       - {x: 51.90079, y: 76.465}
@@ -807,6 +871,7 @@ Transform:
   - {fileID: 555865373}
   - {fileID: 1703530416}
   - {fileID: 671760673}
+  - {fileID: 9783780}
   m_Father: {fileID: 394798394}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1621,7 +1686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
       propertyPath: borderWidth
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
       propertyPath: movementSpeed
