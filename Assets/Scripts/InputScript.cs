@@ -17,12 +17,14 @@ public class InputScript : MonoBehaviour
     private Vector2 startWorldMousePos;
     private Vector2 currentWorldMousePos;
 
-
+    private UnitGroup unitGroup;
 
     private void Start()
     {
         startMousePos = Vector2.zero;
         currentMousePos = Vector2.zero;
+
+        unitGroup = new UnitGroup();
     }
 
 
@@ -30,10 +32,8 @@ public class InputScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            foreach (Unit unit in selectedUnits)
-            {
-                unit.MovementDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
+            unitGroup.SetGroup(selectedUnits);
+            unitGroup.MoveGroup(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
         if (Input.GetMouseButtonDown(0))
         {

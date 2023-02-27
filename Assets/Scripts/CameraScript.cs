@@ -15,6 +15,7 @@ public class CameraScript : MonoBehaviour
         WheelMovement();
         KeysMovement();
         BorderMovement();
+        CameraZoom();
     }
 
     private void WheelMovement()
@@ -46,6 +47,11 @@ public class CameraScript : MonoBehaviour
     private void BorderMovement()
     {
         
+    }
+
+    private void CameraZoom()
+    {
+
     }
 
 }
