@@ -1608,6 +1608,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
+      propertyPath: maxZoom
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
+      propertyPath: minZoom
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
+      propertyPath: zoomSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
       propertyPath: borderWidth
       value: 15
       objectReference: {fileID: 0}
@@ -1617,11 +1629,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
       propertyPath: maxMovementSpeed
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
       propertyPath: minMovementSpeed
-      value: 1
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}

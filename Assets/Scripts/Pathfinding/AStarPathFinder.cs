@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class AStarPathFinder
@@ -20,6 +21,14 @@ public class AStarPathFinder
         step = unitSize;
         this.targetCoordinates = targetCoordinates;
 
+        List<Vector2> path = new List<Vector2>();
+
+        if (IsOutOfBorders(currentCoordinates))
+        {
+            path.Add(currentCoordinates);
+            return path;
+        }
+
         Bounds targetArea = new Bounds(targetCoordinates, Vector2.one * 2 * step);
 
         PathNode currentNode = new PathNode()
@@ -30,8 +39,7 @@ public class AStarPathFinder
             PreviousNode = null
         };
         openNodes.Add(currentNode);
-
-        List<Vector2> path = new List<Vector2>();
+    
         while (!targetArea.Contains(currentNode.WorldCoordinates))
         {
             OpenMooreNeighbors(currentNode);
@@ -39,7 +47,6 @@ public class AStarPathFinder
             openNodes.Remove(currentNode);
             closedNodes.Add(currentNode);
             
-
             currentNode = openNodes[0];
             for (int i = 1; i < openNodes.Count; i++)
             {
@@ -47,7 +54,6 @@ public class AStarPathFinder
             }
 
         }
-
 
         while (currentNode != null)
         {           
@@ -127,10 +133,12 @@ public class AStarPathFinder
 
     private bool IsWalkable(PathNode node)
     {
-        return Physics2D.Linecast(node.PreviousNode.WorldCoordinates, node.WorldCoordinates, 1 << 3).collider == null;
+        return Physics2D.Linecast(node.PreviousNode.WorldCoordinates, node.WorldCoordinates, (int)Layers.MAP_OBJECTS).collider == null;
     }
-
-
+    private bool IsOutOfBorders(Vector2 position)
+    {
+        return Physics2D.Linecast(position, targetCoordinates, (int)Layers.MAP_BORDERS).collider != null;
+    }
 
     private void DrawDebugPath(List<Vector2> points, Color c, float time)
     {

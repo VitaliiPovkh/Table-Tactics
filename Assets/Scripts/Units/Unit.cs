@@ -33,20 +33,19 @@ public class Unit : Selectable
     {           
         pathFinder = new AStarPathFinder();
         MovementDirection = transform.position;
-        movementPath.Add(transform.position);
     }
 
     private void Update()
     {
-
-        transform.position = Vector3.MoveTowards(transform.position, movementPath[pathIdx], speed * Time.deltaTime);
-        if ((Vector2)transform.position == movementPath[pathIdx])
+        if (movementPath.Count != 0)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, movementPath[pathIdx], speed * Time.deltaTime);
+        }
+        if ((Vector2)transform.position == movementPath[pathIdx] && pathIdx < movementPath.Count - 1)
         {
             pathIdx++;
-
         }
         transform.up = Vector2.SmoothDamp(transform.up, MovementDirection, ref currentVelocity, 0.1f, speed / 4);
-        Debug.Log($"Current unti pos {transform.position}");
     }
 
     public void Select()
