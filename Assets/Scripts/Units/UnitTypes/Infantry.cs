@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Infantry : Unit
 {
-    
+    public override void Attack(Unit unit)
+    {
+        throw new System.NotImplementedException();
+    }
 }

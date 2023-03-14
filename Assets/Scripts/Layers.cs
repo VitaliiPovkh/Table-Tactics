@@ -1,4 +1,3 @@
-
 public enum Layers
 {
     DEFAULT = 1,
@@ -6,4 +5,3 @@ public enum Layers
     UI = 1 << 5,
     MAP_BORDERS = 1 << 6
 }
-

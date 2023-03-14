@@ -15,15 +15,14 @@ public class AStarPathFinder
         closedNodes = new List<PathNode>();
     }
 
-    //Unit-size should be equal to min value from width and height
-    public List<Vector2> GetPath(Vector2 currentCoordinates, Vector2 targetCoordinates, float unitSize)
+    public List<Vector2> GetPath(Vector2 currentCoordinates, Vector2 targetCoordinates, float minUnitSize)
     {
-        step = unitSize;
+        step = minUnitSize;
         this.targetCoordinates = targetCoordinates;
 
         List<Vector2> path = new List<Vector2>();
 
-        if (IsOutOfBorders(currentCoordinates))
+        if (IsReachable(currentCoordinates))
         {
             path.Add(currentCoordinates);
             return path;
@@ -135,7 +134,7 @@ public class AStarPathFinder
     {
         return Physics2D.Linecast(node.PreviousNode.WorldCoordinates, node.WorldCoordinates, (int)Layers.MAP_OBJECTS).collider == null;
     }
-    private bool IsOutOfBorders(Vector2 position)
+    private bool IsReachable(Vector2 position)
     {
         return Physics2D.Linecast(position, targetCoordinates, (int)Layers.MAP_BORDERS).collider != null;
     }
