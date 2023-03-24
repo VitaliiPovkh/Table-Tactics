@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Infantry : Unit
 {
-    public override void Attack(Unit unit)
+    public override void GetAttacked(IAttackVariational from)
     {
-        throw new System.NotImplementedException();
+        from.Attack(this);
     }
 }

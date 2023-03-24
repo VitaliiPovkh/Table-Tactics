@@ -17,22 +17,6 @@ public class UnitGroup
         this.selectedUnits = new List<Unit>(selectedUnits);
     }
 
-    //public void MoveGroup(Vector2 position)
-    //{
-    //    Unit nearestUnit = selectedUnits[0];
-    //    foreach (Unit unit in selectedUnits)
-    //    {
-    //        if (Vector2.Distance(unit.transform.position, position) < Vector2.Distance(nearestUnit.transform.position, position))
-    //        {
-    //            nearestUnit = unit;
-    //        }
-    //    }
-
-
-
-
-    //}
-
     public void MoveGroup(Vector2 position)
     {
         Vector2 totalPosition = Vector2.zero;
