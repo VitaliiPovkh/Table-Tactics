@@ -1,12 +1,13 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Unit))]
+[RequireComponent(typeof(Unit), typeof(Seeker))]
 public class MovementScript : MonoBehaviour
 {
-    private AStarPathFinder pathFinder;
-    private List<Vector2> movementPath;
+    private Seeker seeker;
+    private Path movementPath;
     private int pathIdx = 0;
 
     private float currentAngularSpeed;
@@ -14,26 +15,30 @@ public class MovementScript : MonoBehaviour
 
     private void Start()
     {
-        pathFinder = new AStarPathFinder();
         MovementDirection = transform.position;      
+        seeker = GetComponent<Seeker>();
     }
 
     private void Update()
     {
-        if (movementPath.Count != 0)
+        if (movementPath == null) return;
+
+        Vector3 nextPosition = (Vector3)movementPath.path[pathIdx].position;
+        if (movementPath.path.Count != 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, movementPath[pathIdx], Info.Speed * Time.deltaTime);
-            Rotate();
+            transform.position = Vector3.MoveTowards(transform.position, nextPosition, Info.Speed * Time.deltaTime);
+            Rotate(nextPosition);
         }
-        if ((Vector2)transform.position == movementPath[pathIdx] && pathIdx < movementPath.Count - 1)
+        if (transform.position == nextPosition && pathIdx < movementPath.path.Count - 1)
         {
             pathIdx++;
         }
+
     }
 
-    private void Rotate()
+    private void Rotate(Vector3 position)
     {
-        Vector3 targetDirection = (Vector3)movementPath[pathIdx] - transform.position;
+        Vector3 targetDirection = position - transform.position;
         if (targetDirection != Vector3.zero)
         {
             targetDirection.z = 0f;
@@ -52,7 +57,7 @@ public class MovementScript : MonoBehaviour
         set
         {
             movementDirection = value;
-            movementPath = pathFinder?.GetPath(transform.position, MovementDirection, transform.localScale.y);
+            movementPath = seeker?.StartPath(transform.position, movementDirection);
             pathIdx = 0;
         }
     }
