@@ -22,6 +22,7 @@ public class MovementScript : MonoBehaviour
     private void Update()
     {
         if (movementPath == null) return;
+        if (movementPath.path.Count <= pathIdx) return;
 
         Vector3 nextPosition = (Vector3)movementPath.path[pathIdx].position;
         if (movementPath.path.Count != 0)

@@ -7,7 +7,8 @@ public class InputScript : MonoBehaviour
     [SerializeField] private Image selectionRect;
     [SerializeField] private RectTransform guiCanvasRect;
     [SerializeField] private List<Unit> selectedUnits = new List<Unit>();
-
+    [Range(0f, 30f)]
+    [SerializeField] private float formationRadius = 15f;
 
     private Vector2 startMousePos;
     private Vector2 currentMousePos;
@@ -31,7 +32,7 @@ public class InputScript : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             unitGroup.SetGroup(selectedUnits);
-            unitGroup.MoveGroup(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            unitGroup.MoveGroup(Camera.main.ScreenToWorldPoint(Input.mousePosition), formationRadius);
         }
         if (Input.GetMouseButtonDown(0))
         {
