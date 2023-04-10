@@ -1,25 +1,27 @@
 using UnityEngine;
 
-public abstract class Selectable : MonoBehaviour
+[RequireComponent(typeof(Unit))]
+public class Selectable : MonoBehaviour
 {
     private Color unitColor;
-    private SpriteRenderer spriteRenderer;
 
-    protected virtual void Start()
+    private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        unitColor = spriteRenderer.color;
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        Unit = GetComponent<Unit>();
+        unitColor = SpriteRenderer.color;
     }
 
     public void Select()
     {
-        spriteRenderer.color = new Color(1f, 1f, 1f);
+        SpriteRenderer.color = new Color(1f, 1f, 1f);
     }
 
     public void Deselect()
     {
-        spriteRenderer.color = unitColor;
+        SpriteRenderer.color = unitColor;
     }
 
-    protected SpriteRenderer SpriteRenderer => spriteRenderer;
+    protected SpriteRenderer SpriteRenderer { get; private set; }
+    public Unit Unit { get; private set; }
 }

@@ -618,6 +618,7 @@ GameObject:
   - component: {fileID: 3727625666941083200}
   - component: {fileID: 248603926265087649}
   - component: {fileID: -4890260867302915667}
+  - component: {fileID: -8116678422536460895}
   m_Layer: 0
   m_Name: spearman
   m_TagString: Untagged
@@ -736,7 +737,6 @@ MonoBehaviour:
   attackArea: {fileID: 5246127011856106450}
   squadeScale: 1
   attackCooldown: 0
-  movementScript: {fileID: 3727625666941083200}
 --- !u!114 &3727625666941083200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,6 +799,18 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
+--- !u!114 &-8116678422536460895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748949406210993527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f85ded6df9dfa6428c39475381f2d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8873081006282775238
 GameObject:
   m_ObjectHideFlags: 0

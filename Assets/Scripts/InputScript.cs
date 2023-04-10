@@ -6,7 +6,7 @@ public class InputScript : MonoBehaviour
 {
     [SerializeField] private Image selectionRect;
     [SerializeField] private RectTransform guiCanvasRect;
-    [SerializeField] private List<Unit> selectedUnits = new List<Unit>();
+    [SerializeField] private List<Selectable> selectedUnits = new List<Selectable>();
     [Range(0f, 30f)]
     [SerializeField] private float formationRadius = 15f;
 
@@ -80,8 +80,7 @@ public class InputScript : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapAreaAll(startWorldMousePos, currentWorldMousePos);
         foreach (Collider2D collider in colliders)
         {
-            Unit unit = collider.GetComponent<Unit>();
-            if (unit != null)
+            if (collider.TryGetComponent(out Selectable unit))
             {
                 selectedUnits.Add(unit);
                 unit.Select();
@@ -91,7 +90,7 @@ public class InputScript : MonoBehaviour
 
     private void UnselectUnits()
     {
-        foreach (Unit unit in selectedUnits)
+        foreach (Selectable unit in selectedUnits)
         {
             unit.Deselect();
         }

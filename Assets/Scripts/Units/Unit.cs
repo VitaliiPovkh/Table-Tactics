@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Unit : Selectable, IAttackVariational
+public abstract class Unit : MonoBehaviour, IAttackVariational
 {
     [SerializeField] private UnitInfo info;
     [SerializeField] private PolygonCollider2D attackArea;
@@ -14,8 +14,8 @@ public abstract class Unit : Selectable, IAttackVariational
 
     [Space(12)] //Вынести боёвку в отдельный монобех
     [SerializeField] private float attackCooldown;
-    [Space(12)]
-    [SerializeField] private MovementScript movementScript;
+
+    private SpriteRenderer spriteRenderer;
 
     private float currentHp;
     private int currentAmmo;
@@ -33,11 +33,13 @@ public abstract class Unit : Selectable, IAttackVariational
 
     //private Unit currentTarget;
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
-        movementScript.Info = info;
-        SpriteRenderer.sprite = info.BaseSprite;
+        MovementScript = GetComponent<MovementScript>();
+
+        MovementScript.Info = info;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = info.BaseSprite;
 
         foreach (Transform emblem in transform.GetChild(1))
         {
@@ -68,6 +70,7 @@ public abstract class Unit : Selectable, IAttackVariational
     {
         SetEmblem();
     }
+
     public void RecieveDamage(float damage)
     {
         currentHp -= damage * armorCoeficient;
@@ -140,10 +143,6 @@ public abstract class Unit : Selectable, IAttackVariational
         enemy.RecieveDamage(info.Damage * info.SiegeDamageModifire);
     }
 
-    // TODO: Implement target and command system
-    //       Decompose class to "Movement" and "Attack" monobehs
-    //       Create Input script with ALL inputs, 
-    //       Divide cam script into "Move camera" methods
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         Unit enemy = collision.gameObject.GetComponent<Unit>();
@@ -171,7 +170,7 @@ public abstract class Unit : Selectable, IAttackVariational
                 if (currentAmmo <= 0) break;
                 DecreaseAmmo();
             }
-            enemy?.GetAttacked(this);
+            enemy.GetAttacked(this);
             yield return new WaitForSecondsRealtime(attackCooldown);
         }
     }
@@ -180,11 +179,5 @@ public abstract class Unit : Selectable, IAttackVariational
     protected UnitInfo Info => info;
     protected int CurrentAmmo => currentAmmo;
     public bool DoesIgnoreCharge => info.DoesIgnoreCharge;
-
-    //Change behaviour
-    public Vector2 MovementDirection 
-    { 
-        get => movementScript.MovementDirection;
-        set => movementScript.MovementDirection = value; 
-    }
+    public MovementScript MovementScript { get; private set; }
 }

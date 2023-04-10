@@ -14,7 +14,7 @@ public class SiegeUnit : Unit
 
     public override void Attack(Cavalry enemy)
     {
-        if (DidHit())
+        if (CheckHitProb())
         {
             base.Attack(enemy);
         }
@@ -22,7 +22,7 @@ public class SiegeUnit : Unit
 
     public override void Attack(Infantry enemy)
     {
-        if (DidHit())
+        if (CheckHitProb())
         {
             base.Attack(enemy);
         }
@@ -30,13 +30,13 @@ public class SiegeUnit : Unit
 
     public override void Attack(SiegeUnit enemy)
     {
-        if (DidHit())
+        if (CheckHitProb())
         {
             base.Attack(enemy);
         }
     }
 
-    public bool DidHit()
+    public bool CheckHitProb()
     {
         float hitRoll = Random.Range(0f, 1f);
         return hitRoll <= hitProbability / 100f;
