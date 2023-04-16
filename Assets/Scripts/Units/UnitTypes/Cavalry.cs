@@ -13,9 +13,12 @@ public class Cavalry : Unit
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        Unit enemy = collision.gameObject.GetComponent<Unit>();
-        Charge(enemy);
-        base.OnCollisionEnter2D(collision);
+        if (collision.collider.TryGetComponent(out Enemy enemy))
+        {
+            Unit unit = enemy.GetComponent<Unit>();
+            Charge(unit);
+            base.OnCollisionEnter2D(collision);
+        }
     }
 
     private void Charge(Unit enemy)

@@ -5,4 +5,6 @@ public enum Layers
     UI = 1 << 5,
     MAP_BORDERS = 1 << 6,
     RIVER = 1 << 7,
+    UNITS = 1 << 8,
+    ENEMY = 1 << 9
 }

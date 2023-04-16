@@ -10,38 +10,52 @@ public class InputScript : MonoBehaviour
     [Range(0f, 30f)]
     [SerializeField] private float formationRadius = 15f;
 
-    private Vector2 startMousePos;
-    private Vector2 currentMousePos;
-
-    private Vector2 startWorldMousePos;
-    private Vector2 currentWorldMousePos;
+    private Vector2 selectionStartMousePos;
+    private Vector2 selectionEndMousePos;
 
     private UnitGroup unitGroup;
 
     private void Start()
     {
-        startMousePos = Vector2.zero;
-        currentMousePos = Vector2.zero;
+        selectionStartMousePos = Vector2.zero;
+        selectionEndMousePos = Vector2.zero;
 
         unitGroup = new UnitGroup();
     }
 
-
+    /*TODO:
+     * Implement movement marker gameobject, so that only AIDestinationSetter could be used 
+     */
     private void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
             unitGroup.SetGroup(selectedUnits);
-            unitGroup.MoveGroup(Camera.main.ScreenToWorldPoint(Input.mousePosition), formationRadius);
+
+            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            RaycastHit2D objectHit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 20f, (int)Layers.ENEMY);
+            Collider2D collider = objectHit.collider;
+
+            if (collider != null)
+            {
+                if (collider.gameObject.TryGetComponent(out Enemy enemy))
+                {
+                    unitGroup.Attack(enemy);
+                    return;
+                }
+            }
+
+            unitGroup.MoveGroup(mouseWorldPos, formationRadius);
         }
         if (Input.GetMouseButtonDown(0))
         {
             selectionRect.gameObject.SetActive(true);
-            startMousePos = Input.mousePosition;
+            selectionStartMousePos = Input.mousePosition;
         }
         if (Input.GetMouseButton(0))
         {
-            currentMousePos = Input.mousePosition;
+            selectionEndMousePos = Input.mousePosition;
             UpdateSelection();
         }
         if (Input.GetMouseButtonUp(0))
@@ -54,19 +68,7 @@ public class InputScript : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            Vector2 screenStartMousePos = startMousePos;
-            Vector2 screenCurrentMousePos = currentMousePos;
-
-            screenStartMousePos.y = Mathf.Abs(Screen.height - screenStartMousePos.y);
-            screenCurrentMousePos.y = Mathf.Abs(Screen.height - screenCurrentMousePos.y);
-
-            float inset = Mathf.Min(screenStartMousePos.x, screenCurrentMousePos.x);
-            float size = Mathf.Abs(screenCurrentMousePos.x - screenStartMousePos.x);
-            selectionRect.rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, inset, size);
-
-            inset = Mathf.Min(screenStartMousePos.y, screenCurrentMousePos.y);
-            size = Mathf.Abs(screenCurrentMousePos.y - screenStartMousePos.y);
-            selectionRect.rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, inset, size);
+            DrawSelectionRectangle();
         }
     }
 
@@ -74,10 +76,10 @@ public class InputScript : MonoBehaviour
     {
         UnselectUnits();
 
-        startWorldMousePos = Camera.main.ScreenToWorldPoint(startMousePos);
-        currentWorldMousePos = Camera.main.ScreenToWorldPoint(currentMousePos);
+        Vector2 selectionStartWorldMousePos = Camera.main.ScreenToWorldPoint(selectionStartMousePos);
+        Vector2 selectionEndWorldMousePos = Camera.main.ScreenToWorldPoint(selectionEndMousePos);
 
-        Collider2D[] colliders = Physics2D.OverlapAreaAll(startWorldMousePos, currentWorldMousePos);
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(selectionStartWorldMousePos, selectionEndWorldMousePos);
         foreach (Collider2D collider in colliders)
         {
             if (collider.TryGetComponent(out Selectable unit))
@@ -97,7 +99,22 @@ public class InputScript : MonoBehaviour
         selectedUnits.Clear();
     }
 
+    private void DrawSelectionRectangle()
+    {
+        Vector2 screenStartMousePos = selectionStartMousePos;
+        Vector2 screenEndMousePos = selectionEndMousePos;
 
+        screenStartMousePos.y = Mathf.Abs(Screen.height - screenStartMousePos.y);
+        screenEndMousePos.y = Mathf.Abs(Screen.height - screenEndMousePos.y);
+
+        float inset = Mathf.Min(screenStartMousePos.x, screenEndMousePos.x);
+        float size = Mathf.Abs(screenEndMousePos.x - screenStartMousePos.x);
+        selectionRect.rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, inset, size);
+
+        inset = Mathf.Min(screenStartMousePos.y, screenEndMousePos.y);
+        size = Mathf.Abs(screenEndMousePos.y - screenStartMousePos.y);
+        selectionRect.rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, inset, size);
+    }
 
 
 }

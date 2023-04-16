@@ -2,55 +2,44 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-[RequireComponent(typeof(Unit), typeof(Seeker))]
+
 public class MovementScript : MonoBehaviour
 {
     private Seeker seeker;
-    private Path movementPath;
-    private int pathIdx = 0;
+    private AILerp aiLerp;
 
-    private float currentAngularSpeed;
+    private float currentAngularSpeed = 15f;
     private Vector2 movementDirection;
+
+    private Rigidbody2D unitsBody;
+    private Unit unit;
+
+
 
     private void Start()
     {
-        MovementDirection = transform.position;      
+        MovementDirection = transform.position;
         seeker = GetComponent<Seeker>();
+        unitsBody = GetComponent<Rigidbody2D>();
+        unit = GetComponent<Unit>();
+        aiLerp = GetComponent<AILerp>();
+
+        aiLerp.speed = unit.Info.Speed;
+        aiLerp.rotationSpeed = currentAngularSpeed;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (movementPath == null) return;
-        if (movementPath.path.Count <= pathIdx) return;
-
-        Vector3 nextPosition = (Vector3)movementPath.path[pathIdx].position;
-        if (movementPath.path.Count != 0)
+        Enemy target = unit.Target;
+        if (unitsBody.position == movementDirection && target != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextPosition, Info.Speed * Time.deltaTime);
-            Rotate(nextPosition);
-        }
-        if (transform.position == nextPosition && pathIdx < movementPath.path.Count - 1)
-        {
-            pathIdx++;
-        }
-
-    }
-
-    private void Rotate(Vector3 position)
-    {
-        Vector3 targetDirection = position - transform.position;
-        if (targetDirection != Vector3.zero)
-        {
-            targetDirection.z = 0f;
-            float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
-            float currentAngle = transform.eulerAngles.z;
-
-            float newAngle = Mathf.SmoothDampAngle(currentAngle, targetAngle, ref currentAngularSpeed, 1f);
-
-            transform.eulerAngles = Vector3.forward * newAngle;
+            Vector2 direction = (unitsBody.position - (Vector2)target.transform.position).normalized;
+            seeker.StartPath(unitsBody.position, unitsBody.position - direction / 2);
         }
     }
+
 
     public Vector2 MovementDirection
     {
@@ -58,11 +47,8 @@ public class MovementScript : MonoBehaviour
         set
         {
             movementDirection = value;
-            movementPath = seeker?.StartPath(transform.position, movementDirection);
-            pathIdx = 0;
+            seeker?.StartPath(unitsBody.position, movementDirection);
         }
     }
-
-    public UnitInfo Info { private get; set; }
 
 }

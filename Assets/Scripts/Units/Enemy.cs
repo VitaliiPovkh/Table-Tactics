@@ -1,17 +1,14 @@
 
 using UnityEngine;
 
+[RequireComponent(typeof(Unit))]
 public class Enemy : MonoBehaviour
 {
+    private Unit unit;
 
-    void Start()
+    private void Start()
     {
-        
+        unit = GetComponent<Unit>();    
     }
 
-
-    void Update()
-    {
-        
-    }
 }

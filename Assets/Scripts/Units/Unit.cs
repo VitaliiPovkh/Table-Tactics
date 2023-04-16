@@ -31,14 +31,13 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
     private float armorCoeficient;
     private Coroutine attackCycle;
 
-    //private Unit currentTarget;
+    
 
     protected void Start()
     {
         MovementScript = GetComponent<MovementScript>();
-
-        MovementScript.Info = info;
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         spriteRenderer.sprite = info.BaseSprite;
 
         foreach (Transform emblem in transform.GetChild(1))
@@ -46,29 +45,41 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
             emblem.GetComponent<SpriteRenderer>().sprite = info.Emblem;
         }        
 
-        attackArea.transform.localScale = new Vector2(1, info.AttackRange);
-        attackArea.transform.position += (Vector3)Vector2.up * info.AttackRange / 2 * 10;
+        attackArea.transform.parent.localScale = new Vector2(1, info.AttackRange);
+
+        
 
         switch (info.Heaviness)
         {
             case UnitHeaviness.LIGHT:
                 armorCoeficient = 1f;
+                SetEmblem(1);
                 break;
             case UnitHeaviness.MEDIUM:
                 armorCoeficient = 0.75f;
+                SetEmblem(3);
                 break;
             case UnitHeaviness.HEAVY:
                 armorCoeficient = 0.5f;
+                SetEmblem(5);
                 break;
         }
-
-        SetEmblem();
-        
     }
 
     private void OnValidate()
     {
-        SetEmblem();
+        switch (info.Heaviness)
+        {
+            case UnitHeaviness.LIGHT:
+                SetEmblem(1);
+                break;
+            case UnitHeaviness.MEDIUM:
+                SetEmblem(3);
+                break;
+            case UnitHeaviness.HEAVY:
+                SetEmblem(5);
+                break;
+        }
     }
 
     public void RecieveDamage(float damage)
@@ -95,34 +106,25 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
 
     
 
-    private void SetEmblem()
+    private void SetEmblem(int count)
     {
-        int currentEmblemCount = (int)((squadeScale - 1) * 10);
-
-        Transform allEmblems = transform.GetChild(1);
-
-        if (currentEmblemCount == 0)
+        Transform emblemsParent = transform.GetChild(1);
+        
+        if (count >= emblemsParent.childCount)
         {
-            allEmblems.GetChild(0).gameObject.SetActive(true);
             return;
         }
-        for (int i = 1; i < currentEmblemCount; i++)
-        {
-            if (i % 2 == 0)
-            {
-                allEmblems.GetChild(i).gameObject.SetActive(true);
-                allEmblems.GetChild(i - 1).gameObject.SetActive(true);
-            }
 
+        GameObject[] emblems = new GameObject[emblemsParent.childCount];
+
+        for (int i = 0; i < emblems.Length; i++)
+        {
+            emblems[i] = emblemsParent.GetChild(i).gameObject;
         }
-        for (int i = allEmblems.childCount - 1; i > currentEmblemCount - 1; i--)
-        {
-            if (i % 2 == 0)
-            {
-                allEmblems.GetChild(i).gameObject.SetActive(false);
-                allEmblems.GetChild(i - 1).gameObject.SetActive(false);
-            }
 
+        for (int i = 0; i < count; i++)
+        {
+            emblems[i].SetActive(true);
         }
     }
 
@@ -145,10 +147,15 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        Unit enemy = collision.gameObject.GetComponent<Unit>();
-        if (attackCycle == null && enemy != null)
+        //Unit enemy = collision.gameObject.GetComponent<Unit>();
+        //if (attackCycle == null && enemy != null)
+        //{
+        //    attackCycle = StartCoroutine(ManageAttack(enemy));
+        //}
+
+        if (collision.collider.TryGetComponent(out Enemy enemy))
         {
-            attackCycle = StartCoroutine(ManageAttack(enemy));
+            Target = enemy;
         }
     }
 
@@ -176,8 +183,9 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
     }
 
     
-    protected UnitInfo Info => info;
+    public UnitInfo Info => info;
     protected int CurrentAmmo => currentAmmo;
     public bool DoesIgnoreCharge => info.DoesIgnoreCharge;
     public MovementScript MovementScript { get; private set; }
+    public Enemy Target { get; set; }
 }

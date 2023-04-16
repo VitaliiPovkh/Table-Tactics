@@ -4,24 +4,24 @@ using UnityEngine;
 public class Selectable : MonoBehaviour
 {
     private Color unitColor;
+    private SpriteRenderer spriteRenderer;
 
     private void Start()
     {
-        SpriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         Unit = GetComponent<Unit>();
-        unitColor = SpriteRenderer.color;
+        unitColor = spriteRenderer.color;
     }
 
     public void Select()
     {
-        SpriteRenderer.color = new Color(1f, 1f, 1f);
+        spriteRenderer.color = new Color(1f, 1f, 1f);
     }
 
     public void Deselect()
     {
-        SpriteRenderer.color = unitColor;
+        spriteRenderer.color = unitColor;
     }
 
-    protected SpriteRenderer SpriteRenderer { get; private set; }
     public Unit Unit { get; private set; }
 }

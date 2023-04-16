@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1569e56d9d7cb424b8ac9dac86571bf7, type: 3}
   m_Name: SpearmanInfo
   m_EditorClassIdentifier: 
-  unitPrice: 0
+  unitPrice: 150
   unitName: Spearman Light
   hp: 350
-  speed: 3
-  attackRange: 3
+  speed: 8.16
+  attackRange: 1.62
   damage: 5
   infantryModifire: 0.68
   cavalryModifire: 2.06
   siegeModifire: 0.86
   buildingModifire: 0
-  doesIgnoreCharge: 0
-  heaviness: 0
+  doesIgnoreCharge: 1
+  heaviness: 2
   emblem: {fileID: 21300000, guid: 6638ea6e0c1fd6f439854ce01f8eac92, type: 3}
   baseSprite: {fileID: 21300000, guid: e5b216aad0c109d4cae08a087f076fe7, type: 3}
