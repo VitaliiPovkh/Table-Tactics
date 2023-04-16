@@ -6,18 +6,15 @@ public class Cavalry : Unit
     [Range(1f, 5f)]
     [SerializeField] private float chargeModifire = 2;
 
-    public override void GetAttacked(IAttackVariational from)
-    {
-        from.Attack(this);
-    }
+    public override void GetAttacked(IAttackVariational from) => from.Attack(this);
 
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.collider.TryGetComponent(out Enemy enemy))
+        if (other.TryGetComponent(out Enemy enemy))
         {
             Unit unit = enemy.GetComponent<Unit>();
             Charge(unit);
-            base.OnCollisionEnter2D(collision);
+            base.OnTriggerEnter2D(other);
         }
     }
 

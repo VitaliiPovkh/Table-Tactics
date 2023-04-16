@@ -34,7 +34,7 @@ public class InputScript : MonoBehaviour
 
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            RaycastHit2D objectHit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 20f, (int)Layers.ENEMY);
+            RaycastHit2D objectHit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 20f);
             Collider2D collider = objectHit.collider;
 
             if (collider != null)

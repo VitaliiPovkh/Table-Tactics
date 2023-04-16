@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 227875807928677908}
   - component: {fileID: 5800270479385490043}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: emblem (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6269810798071804450}
   - component: {fileID: 5774549182483273832}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: hp_mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1165425741454350150}
   - component: {fileID: 8381449201633249236}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: emblem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8239118911146107927}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: emblem_array
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2265448695887176547}
   - component: {fileID: 5246127011856106450}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: attack_area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7829716250548202603}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: attack_anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 783516639418967614}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8022056434666743459}
   - component: {fileID: 8539745241082109674}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: emblem (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,7 +507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4097482898218227104}
   - component: {fileID: 1958376505060141378}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: emblem (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,12 +595,13 @@ GameObject:
   - component: {fileID: 1284777719283519740}
   - component: {fileID: 3727625666941083200}
   - component: {fileID: 6204264374988151940}
+  - component: {fileID: 4730024159541955307}
   - component: {fileID: 248603926265087649}
   - component: {fileID: 482986989885217600}
   - component: {fileID: 451241029088726144}
   - component: {fileID: 8332800685798676039}
   - component: {fileID: 8357271194764073594}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,8 +718,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info: {fileID: 11400000, guid: 4f5e80b0822a73c4da194053bc200184, type: 2}
   attackArea: {fileID: 5246127011856106450}
-  squadeScale: 1
   attackCooldown: 0
+  currentHp: 0
+  currentAmmo: 0
 --- !u!114 &3727625666941083200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,6 +745,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed02e8c785a7894a96eb4c4680ef6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4730024159541955307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748949406210993527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62ec649962c04b447a8fd7fb7e833181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBarTransform: {fileID: 783516639418967614}
 --- !u!114 &248603926265087649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,7 +879,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5195088478599330576}
   - component: {fileID: 2902284092365264357}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: emblem (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

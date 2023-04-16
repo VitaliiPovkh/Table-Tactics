@@ -10,6 +10,8 @@ public abstract class UnitInfo : ScriptableObject
     [SerializeField] private float attackRange;
     [SerializeField] private float damage;
     [Space(20)]
+    [SerializeField] private float attackCooldown;
+    [Space(20)]
     [Range(0f, 3f)]
     [SerializeField] private float infantryModifire = 1f;
     [Range(0f, 3f)]
@@ -38,6 +40,7 @@ public abstract class UnitInfo : ScriptableObject
     public float SiegeDamageModifire => siegeModifire;
     public float BuildingDamageModifire => buildingModifire;
     public float Damage => damage;
+    public float AttackCooldown => attackCooldown;
     public Sprite Emblem => emblem;
     public Sprite BaseSprite => baseSprite; 
 }

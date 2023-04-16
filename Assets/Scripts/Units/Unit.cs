@@ -8,29 +8,24 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
 {
     [SerializeField] private UnitInfo info;
     [SerializeField] private PolygonCollider2D attackArea;
-    
-    [Range(1f, 1.7f)]
-    [SerializeField] private float squadeScale = 1f;
 
-    [Space(12)] //Вынести боёвку в отдельный монобех
+    [Space(12)]
     [SerializeField] private float attackCooldown;
 
     private SpriteRenderer spriteRenderer;
 
-    private float currentHp;
-    private int currentAmmo;
-
-    //for upgrades
-    private float unitPriceModifire;
-    private float speedModifire;
-    private float baseDamageModifire;
-    private float attackRangeModifire;
-    private float chargeDamageModifire;
-    //
+    [SerializeField] private float currentHp;
+    [SerializeField] private int currentAmmo;
 
     private float armorCoeficient;
     private Coroutine attackCycle;
 
+    private Enemy target;
+
+    public delegate void Notify();
+
+    public event Notify NotifyDeath;
+    public event Notify NotifyHPChange;
     
 
     protected void Start()
@@ -40,14 +35,15 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
 
         spriteRenderer.sprite = info.BaseSprite;
 
-        foreach (Transform emblem in transform.GetChild(1))
+        foreach (Transform emblem in transform.GetChild(0))
         {
             emblem.GetComponent<SpriteRenderer>().sprite = info.Emblem;
         }        
 
         attackArea.transform.parent.localScale = new Vector2(1, info.AttackRange);
 
-        
+        currentHp = info.HP;
+        attackCooldown = info.AttackCooldown;
 
         switch (info.Heaviness)
         {
@@ -85,9 +81,11 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
     public void RecieveDamage(float damage)
     {
         currentHp -= damage * armorCoeficient;
+        NotifyHPChange?.Invoke();
         if (currentHp < 0)
         {
-            //...
+            NotifyDeath?.Invoke();
+            Destroy(gameObject);
         }
     }
 
@@ -103,8 +101,6 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
             currentAmmo--;
         }
     }
-
-    
 
     private void SetEmblem(int count)
     {
@@ -145,28 +141,20 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
         enemy.RecieveDamage(info.Damage * info.SiegeDamageModifire);
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        //Unit enemy = collision.gameObject.GetComponent<Unit>();
-        //if (attackCycle == null && enemy != null)
-        //{
-        //    attackCycle = StartCoroutine(ManageAttack(enemy));
-        //}
 
-        if (collision.collider.TryGetComponent(out Enemy enemy))
+        if (Target == null && other.TryGetComponent(out Enemy enemy))
         {
             Target = enemy;
         }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (attackCycle != null)
+        if (Target != null && attackCycle == null)
         {
-            StopCoroutine(attackCycle);
-            attackCycle = null;
+            attackCycle = StartCoroutine(ManageAttack(Target.GetComponent<Unit>()));
         }
     }
+
+
 
     private IEnumerator ManageAttack(Unit enemy)
     {
@@ -182,10 +170,39 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
         }
     }
 
+    private void ResetTarget()
+    {
+        Target = null;
+        StopCoroutine(attackCycle);
+        attackCycle = null;
+    }
     
     public UnitInfo Info => info;
     protected int CurrentAmmo => currentAmmo;
     public bool DoesIgnoreCharge => info.DoesIgnoreCharge;
     public MovementScript MovementScript { get; private set; }
-    public Enemy Target { get; set; }
+    public Enemy Target 
+    {
+        get => target;
+        set
+        {
+            if (value != null && target == null)   
+            {
+                target = value;
+                Unit targetInfo = target.GetComponent<Unit>();
+                targetInfo.NotifyDeath += ResetTarget;
+            }
+            if (value == null && target != null)
+            {
+                Unit targetInfo = target.GetComponent<Unit>();
+                targetInfo.NotifyDeath -= ResetTarget;
+            }
+        }
+    }
+
+    public float CurrentHP
+    {
+        get => currentHp;
+        private set => currentHp = value;
+    }
 }

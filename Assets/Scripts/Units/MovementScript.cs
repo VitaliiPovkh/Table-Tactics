@@ -16,7 +16,7 @@ public class MovementScript : MonoBehaviour
     private Rigidbody2D unitsBody;
     private Unit unit;
 
-
+    private bool finalStop = false;
 
     private void Start()
     {
@@ -33,10 +33,11 @@ public class MovementScript : MonoBehaviour
     private void FixedUpdate()
     {
         Enemy target = unit.Target;
-        if (unitsBody.position == movementDirection && target != null)
+        if (unitsBody.position == movementDirection && target != null && !finalStop)
         {
             Vector2 direction = (unitsBody.position - (Vector2)target.transform.position).normalized;
             seeker.StartPath(unitsBody.position, unitsBody.position - direction / 2);
+            finalStop = true;
         }
     }
 
@@ -48,6 +49,7 @@ public class MovementScript : MonoBehaviour
         {
             movementDirection = value;
             seeker?.StartPath(unitsBody.position, movementDirection);
+            finalStop = false;
         }
     }
 
