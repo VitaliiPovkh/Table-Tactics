@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrice: 150
   unitName: Spearman Light
-  hp: 350
-  speed: 8.16
+  hp: 400
+  speed: 3.16
   attackRange: 1.62
-  damage: 5
+  damage: 15
+  attackCooldown: 1.64
   infantryModifire: 0.68
   cavalryModifire: 2.06
-  siegeModifire: 0.86
+  siegeModifire: 0.76
   buildingModifire: 0
   doesIgnoreCharge: 1
   heaviness: 2

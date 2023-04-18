@@ -34,16 +34,16 @@ public class InputScript : MonoBehaviour
 
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            RaycastHit2D objectHit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 20f);
-            Collider2D collider = objectHit.collider;
+            RaycastHit2D[] objectHit = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, 20f);
+            List<RaycastHit2D> listOfHits = new List<RaycastHit2D>(objectHit);
 
-            if (collider != null)
+            Enemy enemy = null;
+            listOfHits.Find((hit) => hit.collider.TryGetComponent(out enemy));
+
+            if (enemy != null)
             {
-                if (collider.gameObject.TryGetComponent(out Enemy enemy))
-                {
-                    unitGroup.Attack(enemy);
-                    return;
-                }
+                unitGroup.Attack(enemy);
+                return;
             }
 
             unitGroup.MoveGroup(mouseWorldPos, formationRadius);

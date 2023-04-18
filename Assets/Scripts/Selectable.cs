@@ -23,5 +23,13 @@ public class Selectable : MonoBehaviour
         spriteRenderer.color = unitColor;
     }
 
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        if (Unit != null)
+        {
+            Unit.OnAttackAreaEnter(other);
+        }   
+    }
+
     public Unit Unit { get; private set; }
 }

@@ -24,7 +24,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
 
     public delegate void Notify();
 
-    public event Notify NotifyDeath;
+    public event Notify NotifyUntargeting;
     public event Notify NotifyHPChange;
     
 
@@ -82,9 +82,9 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
     {
         currentHp -= damage * armorCoeficient;
         NotifyHPChange?.Invoke();
-        if (currentHp < 0)
+        if (currentHp <= 0)
         {
-            NotifyDeath?.Invoke();
+            NotifyUntargeting?.Invoke();
             Destroy(gameObject);
         }
     }
@@ -104,24 +104,18 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
 
     private void SetEmblem(int count)
     {
-        Transform emblemsParent = transform.GetChild(1);
+        Transform emblemsParent = transform.GetChild(0);
         
-        if (count >= emblemsParent.childCount)
+        if (count > emblemsParent.childCount)
         {
             return;
         }
 
-        GameObject[] emblems = new GameObject[emblemsParent.childCount];
-
-        for (int i = 0; i < emblems.Length; i++)
-        {
-            emblems[i] = emblemsParent.GetChild(i).gameObject;
-        }
-
         for (int i = 0; i < count; i++)
         {
-            emblems[i].SetActive(true);
+            emblemsParent.GetChild(i).gameObject.SetActive(true);
         }
+
     }
 
     public abstract void GetAttacked(IAttackVariational from);
@@ -141,22 +135,20 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
         enemy.RecieveDamage(info.Damage * info.SiegeDamageModifire);
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D other)
+    public virtual void OnAttackAreaEnter(Collider2D other)
     {
-
-        if (Target == null && other.TryGetComponent(out Enemy enemy))
+        if (other.TryGetComponent(out Enemy enemy))
         {
-            Target = enemy;
-        }
-        if (Target != null && attackCycle == null)
-        {
-            attackCycle = StartCoroutine(ManageAttack(Target.GetComponent<Unit>()));
+            if (Target == null) Target = enemy;
+            if (ReferenceEquals(Target, enemy))
+            {
+                attackCycle = StartCoroutine(ManageAttack());
+            }
+            
         }
     }
 
-
-
-    private IEnumerator ManageAttack(Unit enemy)
+    private IEnumerator ManageAttack()
     {
         while (true)
         {
@@ -165,16 +157,19 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
                 if (currentAmmo <= 0) break;
                 DecreaseAmmo();
             }
-            enemy.GetAttacked(this);
+            if (Target != null)
+            {
+                Target.Unit.GetAttacked(this);
+            }
             yield return new WaitForSecondsRealtime(attackCooldown);
         }
     }
 
-    private void ResetTarget()
+    private void StopAttack()
     {
-        Target = null;
         StopCoroutine(attackCycle);
         attackCycle = null;
+        Target = null;
     }
     
     public UnitInfo Info => info;
@@ -185,17 +180,39 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
     {
         get => target;
         set
-        {
-            if (value != null && target == null)   
+        {   
+            if (target != null)
+            {
+                if (attackCycle != null)
+                {
+                    StopCoroutine(attackCycle);
+                    attackCycle = null;
+                }
+
+                if (value == target)
+                {
+                    Debug.Log("Same target!");
+                    return;
+                }
+
+                target.Unit.NotifyUntargeting -= StopAttack;
+                target = value;
+
+                if (value != null)
+                {
+                    target.Unit.NotifyUntargeting += StopAttack;
+                    Debug.Log("Set NEW target");
+                }
+                else
+                {
+                    Debug.Log("Set target to NULL");
+                }
+            }
+            else if (value != null)
             {
                 target = value;
-                Unit targetInfo = target.GetComponent<Unit>();
-                targetInfo.NotifyDeath += ResetTarget;
-            }
-            if (value == null && target != null)
-            {
-                Unit targetInfo = target.GetComponent<Unit>();
-                targetInfo.NotifyDeath -= ResetTarget;
+                target.Unit.NotifyUntargeting += StopAttack;
+                Debug.Log("Set target");
             }
         }
     }

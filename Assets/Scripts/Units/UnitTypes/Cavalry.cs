@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Cavalry : Unit
 {
@@ -8,13 +9,12 @@ public class Cavalry : Unit
 
     public override void GetAttacked(IAttackVariational from) => from.Attack(this);
 
-    protected override void OnTriggerEnter2D(Collider2D other)
+    public override void OnAttackAreaEnter(Collider2D other)
     {
-        if (other.TryGetComponent(out Enemy enemy))
+        base.OnAttackAreaEnter(other);
+        if (Target != null)
         {
-            Unit unit = enemy.GetComponent<Unit>();
-            Charge(unit);
-            base.OnTriggerEnter2D(other);
+            Charge(Target.Unit);
         }
     }
 
