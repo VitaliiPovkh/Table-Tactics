@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Cavalry : Unit
 {
@@ -7,7 +6,7 @@ public class Cavalry : Unit
     [Range(1f, 5f)]
     [SerializeField] private float chargeModifire = 2;
 
-    public override void GetAttacked(IAttackVariational from) => from.Attack(this);
+    public override void GetAttacked(IAttackVariant from) => from.Attack(this);
 
     public override void OnAttackAreaEnter(Collider2D other)
     {

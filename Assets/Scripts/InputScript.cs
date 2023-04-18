@@ -24,8 +24,9 @@ public class InputScript : MonoBehaviour
     }
 
     /*TODO:
-     * Implement movement marker gameobject, so that only AIDestinationSetter could be used 
-     */
+     * - Implement movement marker gameobject, so that only AIDestinationSetter could be used 
+     * - Fix one click selection (now it selects all of the units in click area)
+     **/
     private void Update()
     {
         if (Input.GetMouseButtonDown(1))

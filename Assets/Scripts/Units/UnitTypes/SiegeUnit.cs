@@ -7,7 +7,7 @@ public class SiegeUnit : Unit
     [Range(0f, 100f)]
     [SerializeField] private float hitProbability;
 
-    public override void GetAttacked(IAttackVariational from) => from.Attack(this);
+    public override void GetAttacked(IAttackVariant from) => from.Attack(this);
 
     public override void Attack(Cavalry enemy)
     {

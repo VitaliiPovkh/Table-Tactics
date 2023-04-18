@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Visitor pattern
-public interface IAttackVariational
+public interface IAttackVariant
 {
     void Attack(Infantry enemy);
     void Attack(Cavalry enemy);

@@ -1,10 +1,7 @@
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Unit : MonoBehaviour, IAttackVariational
+public abstract class Unit : MonoBehaviour, IAttackVariant
 {
     [SerializeField] private UnitInfo info;
     [SerializeField] private PolygonCollider2D attackArea;
@@ -118,7 +115,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
 
     }
 
-    public abstract void GetAttacked(IAttackVariational from);
+    public abstract void GetAttacked(IAttackVariant from);
 
     public virtual void Attack(Infantry enemy)
     {
@@ -142,6 +139,11 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
             if (Target == null) Target = enemy;
             if (ReferenceEquals(Target, enemy))
             {
+                if (attackCycle != null)
+                {
+                    StopCoroutine(attackCycle);
+                    attackCycle = null;
+                }
                 attackCycle = StartCoroutine(ManageAttack());
             }
             
@@ -154,21 +156,16 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
         {
             if (IsRanger())
             {
-                if (currentAmmo <= 0) break;
+                if (currentAmmo <= 0) continue;
                 DecreaseAmmo();
             }
-            if (Target != null)
-            {
-                Target.Unit.GetAttacked(this);
-            }
+            Target.Unit.GetAttacked(this);
             yield return new WaitForSecondsRealtime(attackCooldown);
         }
     }
 
     private void StopAttack()
     {
-        StopCoroutine(attackCycle);
-        attackCycle = null;
         Target = null;
     }
     
@@ -180,39 +177,29 @@ public abstract class Unit : MonoBehaviour, IAttackVariational
     {
         get => target;
         set
-        {   
+        {
+            if (ReferenceEquals(value, target)) return;
+
+            if (attackCycle != null)
+            {
+                StopCoroutine(attackCycle);
+                attackCycle = null;
+            }
+
             if (target != null)
             {
-                if (attackCycle != null)
-                {
-                    StopCoroutine(attackCycle);
-                    attackCycle = null;
-                }
-
-                if (value == target)
-                {
-                    Debug.Log("Same target!");
-                    return;
-                }
-
                 target.Unit.NotifyUntargeting -= StopAttack;
                 target = value;
 
                 if (value != null)
                 {
                     target.Unit.NotifyUntargeting += StopAttack;
-                    Debug.Log("Set NEW target");
-                }
-                else
-                {
-                    Debug.Log("Set target to NULL");
                 }
             }
             else if (value != null)
             {
                 target = value;
                 target.Unit.NotifyUntargeting += StopAttack;
-                Debug.Log("Set target");
             }
         }
     }
