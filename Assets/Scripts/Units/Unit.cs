@@ -108,9 +108,15 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
             return;
         }
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < emblemsParent.childCount; i++)
         {
-            emblemsParent.GetChild(i).gameObject.SetActive(true);
+            GameObject emblem = emblemsParent.GetChild(i).gameObject;
+            if (i < count)
+            {
+                emblem.SetActive(true);
+                continue;
+            }
+            emblem.SetActive(false);
         }
 
     }

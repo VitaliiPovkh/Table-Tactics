@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1569e56d9d7cb424b8ac9dac86571bf7, type: 3}
+  m_Name: medium sword cavalry
+  m_EditorClassIdentifier: 
+  unitPrice: 0
+  unitName: Cavalry with spears medium
+  hp: 300
+  speed: 7
+  attackRange: 1.64
+  damage: 17
+  attackCooldown: 2
+  infantryModifire: 2.03
+  cavalryModifire: 0.47
+  siegeModifire: 0.9
+  buildingModifire: 0.31
+  doesIgnoreCharge: 1
+  heaviness: 1
+  emblem: {fileID: 21300000, guid: 5aef6f92e28d8cc4b9098677c4eb4d86, type: 3}
+  baseSprite: {fileID: 21300000, guid: 81cbb9efa30cabb448eb62d874bc00ce, type: 3}
