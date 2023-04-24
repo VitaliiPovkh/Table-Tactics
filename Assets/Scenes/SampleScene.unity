@@ -1904,8 +1904,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 911946771}
+  - component: {fileID: 911946772}
   m_Layer: 0
-  m_Name: EnemyAI
+  m_Name: GeneralAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1926,6 +1927,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &911946772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911946770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae50722e527eab449324d1002c29105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generalBehaviour: {fileID: 0}
+  allUnitTypes:
+  - {fileID: 11400000, guid: 181912ff022005943aee1f1b5a5ef201, type: 2}
+  - {fileID: 11400000, guid: 4f5e80b0822a73c4da194053bc200184, type: 2}
+  - {fileID: 11400000, guid: 6537c27b1a1cdca4e922f8b94c718caf, type: 2}
+  - {fileID: 11400000, guid: 31b9b470332f08540b8029fcf5e9e5ec, type: 2}
+  - {fileID: 11400000, guid: 2774ed2923cd19649b2c0ea3df25f4cf, type: 2}
+  - {fileID: 11400000, guid: d34b7086db5c08d4ebe8a19aa9245df9, type: 2}
+  - {fileID: 11400000, guid: 42e6302565548484a9c065b78b013e2f, type: 2}
+  - {fileID: 11400000, guid: e8fc37f701bc25a409b8233a0df80847, type: 2}
+  - {fileID: 11400000, guid: c6c64065bd3560348b398017a62a67b6, type: 2}
+  - {fileID: 11400000, guid: e6a8627cbd62ede49a6f5453d29201d5, type: 2}
+  - {fileID: 11400000, guid: df5c76bf33bb36649a5da69d8c874d7b, type: 2}
+  - {fileID: 11400000, guid: 487bdf3348bf9344aa248527ce58b4e8, type: 2}
+  ai: []
+  player: []
 --- !u!4 &950281710 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1279522701218497592, guid: a6ae55d566a1c0041b1d49f5a975c374, type: 3}
@@ -4709,7 +4738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1659754401995463326, guid: 26865bd61d441404cb4dbdfabc989bb1, type: 3}
       propertyPath: zoomSpeed

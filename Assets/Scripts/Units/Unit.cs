@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,19 +18,20 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     private float armorCoeficient;
     private Coroutine attackCycle;
 
-    private Enemy target;
+    private AIUnit target;
 
-    public delegate void Notify();
+    public event Action NotifyUntargeting;
+    public event Action<Unit> NotifyDeath;
+    public event Action NotifyHPChange;
 
-    public event Notify NotifyUntargeting;
-    public event Notify NotifyHPChange;
-    
-
-    protected void Start()
+    private void Awake()
     {
         MovementScript = GetComponent<MovementScript>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
+    protected void Start()
+    {
         spriteRenderer.sprite = info.BaseSprite;
 
         foreach (Transform emblem in transform.GetChild(0))
@@ -82,6 +84,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         if (currentHp <= 0)
         {
             NotifyUntargeting?.Invoke();
+            NotifyDeath?.Invoke(this);
             Destroy(gameObject);
         }
     }
@@ -140,7 +143,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
 
     public virtual void OnAttackAreaEnter(Collider2D other)
     {
-        if (other.TryGetComponent(out Enemy enemy))
+        if (other.TryGetComponent(out AIUnit enemy))
         {
             if (Target == null) Target = enemy;
             if (ReferenceEquals(Target, enemy))
@@ -179,7 +182,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     protected int CurrentAmmo => currentAmmo;
     public bool DoesIgnoreCharge => info.DoesIgnoreCharge;
     public MovementScript MovementScript { get; private set; }
-    public Enemy Target 
+    public AIUnit Target 
     {
         get => target;
         set
@@ -215,4 +218,11 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         get => currentHp;
         private set => currentHp = value;
     }
+
+    public float InfantryThreatLevel => info.InfantryDamageModifire;
+    public float CavalryThreatLevel => info.CavalryDamageModifire;
+    //public float SiegeThreatLevel => info.CavalryDamageModifire;
+
+    public bool IsInGroup { get; set; } = false;
+
 }

@@ -32,7 +32,7 @@ public class MovementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Enemy target = unit.Target;
+        AIUnit target = unit.Target;
         if (unitsBody.position == movementDirection && target != null && !finalStop)
         {
             Vector2 direction = (unitsBody.position - (Vector2)target.transform.position).normalized;

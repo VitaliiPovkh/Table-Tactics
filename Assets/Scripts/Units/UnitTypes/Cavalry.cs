@@ -9,7 +9,7 @@ public class Cavalry : Unit
 
     public override void OnAttackAreaEnter(Collider2D other)
     {
-        if (Target != null && other.TryGetComponent(out Enemy enemy))
+        if (Target != null && other.TryGetComponent(out AIUnit enemy))
         {
             if (ReferenceEquals(Target, enemy))
             {

@@ -1,5 +1,5 @@
 
-public class Building : Selectable
+public class Building : SelectableUnit
 {
    
 }

@@ -1,42 +1,55 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class UnitGroup
 {
-    private List<Unit> selectedUnits;
+    [SerializeField] private List<Unit> unitsInGroup;
 
-    public void SetGroup(List<Selectable> selectedUnits)
+    public virtual void SetGroup(List<SelectableUnit> unitsInGroup)
     {
-        this.selectedUnits = new List<Unit>();
-        foreach (var selectable in selectedUnits)
+        this.unitsInGroup = new List<Unit>();
+        foreach (var selectable in unitsInGroup)
         {
-            this.selectedUnits.Add(selectable.Unit);
+            this.unitsInGroup.Add(selectable.Unit);
+        }
+    }
+
+    public virtual void SetGroup(List<AIUnit> unitsInGroup)
+    {
+        this.unitsInGroup = new List<Unit>();
+        foreach (var selectable in unitsInGroup)
+        {
+            this.unitsInGroup.Add(selectable.Unit);
         }
     }
 
     public void MoveGroup(Vector2 position, float radius)
     {
-        float step = (Mathf.Deg2Rad * 360) / selectedUnits.Count;
+        float step = (Mathf.Deg2Rad * 360) / unitsInGroup.Count;
 
-        selectedUnits[0].Target = null;
-        selectedUnits[0].MovementScript.MovementDirection = position;
-        for (int i = 1; i < selectedUnits.Count; i++)
+        unitsInGroup[0].Target = null;
+        unitsInGroup[0].MovementScript.MovementDirection = position;
+        for (int i = 1; i < unitsInGroup.Count; i++)
         {
-            selectedUnits[i].Target = null;
+            unitsInGroup[i].Target = null;
             Vector2 posOnCircle = new Vector2(Mathf.Sin(i * step), Mathf.Cos(i * step)) * radius;
-            selectedUnits[i].MovementScript.MovementDirection = posOnCircle + position;
+            unitsInGroup[i].MovementScript.MovementDirection = posOnCircle + position;
         }
     }
 
-    public void Attack(Enemy enemy)
+    public void Attack(AIUnit enemy)
     {
-        for (int i = 0; i < selectedUnits.Count; i++)
+        for (int i = 0; i < unitsInGroup.Count; i++)
         {
-            selectedUnits[i].Target = enemy;
-            Vector2 direction = (selectedUnits[i].transform.position - enemy.transform.position).normalized;
-            selectedUnits[i].MovementScript.MovementDirection = (Vector2)enemy.transform.position + direction * (enemy.transform.lossyScale.y * 0.75f); 
+            unitsInGroup[i].Target = enemy;
+            Vector2 direction = (unitsInGroup[i].transform.position - enemy.transform.position).normalized;
+            unitsInGroup[i].MovementScript.MovementDirection = (Vector2)enemy.transform.position + direction * (enemy.transform.lossyScale.y * 0.75f); 
         }
     }
+
+    protected List<Unit> UnitsInGroup => unitsInGroup;
 
 
 }

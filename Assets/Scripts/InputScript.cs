@@ -6,7 +6,7 @@ public class InputScript : MonoBehaviour
 {
     [SerializeField] private Image selectionRect;
     [SerializeField] private RectTransform guiCanvasRect;
-    [SerializeField] private List<Selectable> selectedUnits = new List<Selectable>();
+    [SerializeField] private List<SelectableUnit> selectedUnits = new List<SelectableUnit>();
     [Range(0f, 30f)]
     [SerializeField] private float formationRadius = 15f;
 
@@ -38,7 +38,7 @@ public class InputScript : MonoBehaviour
             RaycastHit2D[] objectHit = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, 20f);
             List<RaycastHit2D> listOfHits = new List<RaycastHit2D>(objectHit);
 
-            Enemy enemy = null;
+            AIUnit enemy = null;
             listOfHits.Find((hit) => hit.collider.TryGetComponent(out enemy));
 
             if (enemy != null)
@@ -81,9 +81,22 @@ public class InputScript : MonoBehaviour
         Vector2 selectionEndWorldMousePos = Camera.main.ScreenToWorldPoint(selectionEndMousePos);
 
         Collider2D[] colliders = Physics2D.OverlapAreaAll(selectionStartWorldMousePos, selectionEndWorldMousePos);
+
+        if (selectionStartWorldMousePos == selectionEndWorldMousePos)
+        {
+            SelectableUnit unit = null;
+            new List<Collider2D>(colliders).Find(c => c.TryGetComponent(out unit));
+            if (unit != null)
+            {
+                selectedUnits.Add(unit);
+                unit.Select();
+                return;
+            }
+        }
+
         foreach (Collider2D collider in colliders)
         {
-            if (collider.TryGetComponent(out Selectable unit))
+            if (collider.TryGetComponent(out SelectableUnit unit))
             {
                 selectedUnits.Add(unit);
                 unit.Select();
@@ -93,7 +106,7 @@ public class InputScript : MonoBehaviour
 
     private void UnselectUnits()
     {
-        foreach (Selectable unit in selectedUnits)
+        foreach (SelectableUnit unit in selectedUnits)
         {
             unit.Deselect();
         }
