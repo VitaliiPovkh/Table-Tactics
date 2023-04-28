@@ -26,4 +26,10 @@ public class Cavalry : Unit
             enemy.RecieveDamage(Info.Damage * chargeModifire - Info.Damage);
         }
     }
+
+    protected override void RecalculateThreat()
+    {
+        base.RecalculateThreat();
+        InfantryThreatLevel *= chargeModifire;
+    }
 }

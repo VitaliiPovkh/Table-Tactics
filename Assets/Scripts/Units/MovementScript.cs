@@ -17,6 +17,7 @@ public class MovementScript : MonoBehaviour
     private Unit unit;
 
     private bool finalStop = false;
+    private Path path;
 
     private void Start()
     {
@@ -48,9 +49,11 @@ public class MovementScript : MonoBehaviour
         set
         {
             movementDirection = value;
-            seeker?.StartPath(unitsBody.position, movementDirection);
+            path = seeker?.StartPath(unitsBody.position, movementDirection);
             finalStop = false;
         }
     }
+
+    public bool IsPathFinished => (path != null && path.path.Count != 0) ? transform.position == (Vector3)path.path[path.path.Count - 1].position : true;
 
 }

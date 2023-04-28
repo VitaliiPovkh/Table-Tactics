@@ -7,7 +7,7 @@ public class UnitGroup
 {
     [SerializeField] private List<Unit> unitsInGroup;
 
-    public virtual void SetGroup(List<SelectableUnit> unitsInGroup)
+    public virtual void SetGroup(List<AIUnit> unitsInGroup)
     {
         this.unitsInGroup = new List<Unit>();
         foreach (var selectable in unitsInGroup)
@@ -16,7 +16,7 @@ public class UnitGroup
         }
     }
 
-    public virtual void SetGroup(List<AIUnit> unitsInGroup)
+    public virtual void SetGroup(List<SelectableUnit> unitsInGroup)
     {
         this.unitsInGroup = new List<Unit>();
         foreach (var selectable in unitsInGroup)
@@ -50,6 +50,7 @@ public class UnitGroup
     }
 
     protected List<Unit> UnitsInGroup => unitsInGroup;
-
+    public Vector2 Position => unitsInGroup[0].transform.position;
+    public bool HasArrived => unitsInGroup[0].MovementScript.IsPathFinished;
 
 }

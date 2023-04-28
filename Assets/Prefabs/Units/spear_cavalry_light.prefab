@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 227875807928677908}
   - component: {fileID: 5800270479385490043}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: emblem (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6269810798071804450}
   - component: {fileID: 5774549182483273832}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: hp_mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2475281519251329569}
   - component: {fileID: 3753869244042851278}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: scan_area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1165425741454350150}
   - component: {fileID: 8381449201633249236}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: emblem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8239118911146107927}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: emblem_array
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2265448695887176547}
   - component: {fileID: 5246127011856106450}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: attack_area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7829716250548202603}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: attack_anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1331038964210436173}
   - component: {fileID: 2532934182937501882}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 783516639418967614}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -554,7 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8022056434666743459}
   - component: {fileID: 8539745241082109674}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: emblem (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,7 +638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4097482898218227104}
   - component: {fileID: 1958376505060141378}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: emblem (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 451241029088726144}
   - component: {fileID: 8332800685798676039}
   - component: {fileID: 8357271194764073594}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: spear_cavalry_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1014,7 +1014,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5195088478599330576}
   - component: {fileID: 2902284092365264357}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: emblem (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 227875807928677908}
   - component: {fileID: 5800270479385490043}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: emblem (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &227875807928677908
 Transform:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 1022433219
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 6638ea6e0c1fd6f439854ce01f8eac92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5aef6f92e28d8cc4b9098677c4eb4d86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6269810798071804450}
   - component: {fileID: 5774549182483273832}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: hp_mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1165425741454350150}
   - component: {fileID: 8381449201633249236}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: emblem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_SortingLayerID: 1022433219
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 6638ea6e0c1fd6f439854ce01f8eac92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5aef6f92e28d8cc4b9098677c4eb4d86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -261,7 +261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8239118911146107927}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: emblem_array
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2265448695887176547}
   - component: {fileID: 5246127011856106450}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: attack_area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,13 +359,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6959459356841571718}
   - component: {fileID: 3024938673072789553}
-  m_Layer: 8
+  - component: {fileID: 3746669611346257250}
+  m_Layer: 7
   m_Name: scan_area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6959459356841571718
 Transform:
   m_ObjectHideFlags: 0
@@ -397,6 +398,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4.2
+--- !u!114 &3746669611346257250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193771343156086804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27550a590596e8499343e04ac128495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4667482877608551314
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7829716250548202603}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: attack_anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 783516639418967614}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,13 +484,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8022056434666743459}
   - component: {fileID: 8539745241082109674}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: emblem (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8022056434666743459
 Transform:
   m_ObjectHideFlags: 0
@@ -534,7 +547,7 @@ SpriteRenderer:
   m_SortingLayerID: 1022433219
   m_SortingLayer: 1
   m_SortingOrder: 22
-  m_Sprite: {fileID: 21300000, guid: 6638ea6e0c1fd6f439854ce01f8eac92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5aef6f92e28d8cc4b9098677c4eb4d86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -555,13 +568,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4097482898218227104}
   - component: {fileID: 1958376505060141378}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: emblem (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4097482898218227104
 Transform:
   m_ObjectHideFlags: 0
@@ -618,7 +631,7 @@ SpriteRenderer:
   m_SortingLayerID: 1022433219
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 6638ea6e0c1fd6f439854ce01f8eac92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5aef6f92e28d8cc4b9098677c4eb4d86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -649,7 +662,7 @@ GameObject:
   - component: {fileID: 451241029088726144}
   - component: {fileID: 8332800685798676039}
   - component: {fileID: 8357271194764073594}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Enemy 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -765,7 +778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c98cc7459d03a438f50f63d118e295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: {fileID: 11400000, guid: 4f5e80b0822a73c4da194053bc200184, type: 2}
+  info: {fileID: 11400000, guid: e8fc37f701bc25a409b8233a0df80847, type: 2}
   attackArea: {fileID: 5246127011856106450}
   attackCooldown: 0
   currentHp: 0
@@ -794,7 +807,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed02e8c785a7894a96eb4c4680ef6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanArea: {fileID: 0}
+  group:
+    unitsInGroup: []
+    groupBehaviour: {fileID: 0}
+  scanArea: {fileID: 3024938673072789553}
+  unitScanner: {fileID: 0}
 --- !u!114 &4730024159541955307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,13 +946,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5195088478599330576}
   - component: {fileID: 2902284092365264357}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: emblem (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5195088478599330576
 Transform:
   m_ObjectHideFlags: 0
@@ -992,7 +1009,7 @@ SpriteRenderer:
   m_SortingLayerID: 1022433219
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 6638ea6e0c1fd6f439854ce01f8eac92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5aef6f92e28d8cc4b9098677c4eb4d86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

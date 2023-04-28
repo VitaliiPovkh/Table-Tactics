@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.thekiwicoder.behaviourtreeditor": {
-      "version": "https://github.com/thekiwicoder0/UnityBehaviourTreeEditor.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "637c892404e66f0832978fcf04533dea03aa4c0b"
-    },
     "com.unity.2d.animation": {
       "version": "7.0.9",
       "depth": 1,

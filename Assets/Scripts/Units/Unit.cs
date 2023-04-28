@@ -59,6 +59,8 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
                 SetEmblem(5);
                 break;
         }
+
+        RecalculateThreat();
     }
 
     private void OnValidate()
@@ -77,10 +79,17 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         }
     }
 
+    protected virtual void RecalculateThreat()
+    {
+        InfantryThreatLevel = info.Damage * info.InfantryDamageModifire * currentHp;
+        CavalryThreatLevel = info.Damage * info.CavalryDamageModifire * currentHp;
+    }
+
     public void RecieveDamage(float damage)
     {
         currentHp -= damage * armorCoeficient;
         NotifyHPChange?.Invoke();
+        RecalculateThreat();
         if (currentHp <= 0)
         {
             NotifyUntargeting?.Invoke();
@@ -219,8 +228,8 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         private set => currentHp = value;
     }
 
-    public float InfantryThreatLevel => info.InfantryDamageModifire;
-    public float CavalryThreatLevel => info.CavalryDamageModifire;
+    public float InfantryThreatLevel { get; protected set; }
+    public float CavalryThreatLevel { get; protected set; }
     //public float SiegeThreatLevel => info.CavalryDamageModifire;
 
     public bool IsInGroup { get; set; } = false;
