@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Unit : MonoBehaviour, IAttackVariant
 {
@@ -15,10 +16,12 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     [SerializeField] private float currentHp;
     [SerializeField] private int currentAmmo;
 
+    [SerializeField] private Commands command;
+
     private float armorCoeficient;
     private Coroutine attackCycle;
 
-    private AIUnit target;
+    private Unit target;
 
     public event Action NotifyUntargeting;
     public event Action<Unit> NotifyDeath;
@@ -150,12 +153,13 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         enemy.RecieveDamage(info.Damage * info.SiegeDamageModifire);
     }
 
-    public virtual void OnAttackAreaEnter(Collider2D other)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.TryGetComponent(out AIUnit enemy))
+        if (collision.TryGetComponent(out Unit unit))
         {
-            if (Target == null) Target = enemy;
-            if (ReferenceEquals(Target, enemy))
+            if (unit.Command == command) return;
+            if (Target == null) Target = unit;
+            if (ReferenceEquals(Target, unit))
             {
                 if (attackCycle != null)
                 {
@@ -164,8 +168,23 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
                 }
                 attackCycle = StartCoroutine(ManageAttack());
             }
-            
+        } 
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Unit unit))
+        {
+            if (ReferenceEquals(Target, unit))
+            {
+                if (attackCycle != null)
+                {
+                    StopCoroutine(attackCycle);
+                    attackCycle = null;
+                }
+            }
         }
+        
     }
 
     private IEnumerator ManageAttack()
@@ -177,7 +196,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
                 if (currentAmmo <= 0) continue;
                 DecreaseAmmo();
             }
-            Target.Unit.GetAttacked(this);
+            Target.GetAttacked(this);
             yield return new WaitForSecondsRealtime(attackCooldown);
         }
     }
@@ -191,7 +210,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     protected int CurrentAmmo => currentAmmo;
     public bool DoesIgnoreCharge => info.DoesIgnoreCharge;
     public MovementScript MovementScript { get; private set; }
-    public AIUnit Target 
+    public Unit Target 
     {
         get => target;
         set
@@ -206,18 +225,18 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
 
             if (target != null)
             {
-                target.Unit.NotifyUntargeting -= StopAttack;
+                target.NotifyUntargeting -= StopAttack;
                 target = value;
 
                 if (value != null)
                 {
-                    target.Unit.NotifyUntargeting += StopAttack;
+                    target.NotifyUntargeting += StopAttack;
                 }
             }
             else if (value != null)
             {
                 target = value;
-                target.Unit.NotifyUntargeting += StopAttack;
+                target.NotifyUntargeting += StopAttack;
             }
         }
     }
@@ -233,5 +252,5 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     //public float SiegeThreatLevel => info.CavalryDamageModifire;
 
     public bool IsInGroup { get; set; } = false;
-
+    public Commands Command => command;
 }

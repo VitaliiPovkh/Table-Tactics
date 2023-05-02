@@ -1,3 +1,4 @@
+using FluentBehaviourTree;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +22,16 @@ public class AIGroup : UnitGroup
     {
         base.SetGroup(unitsInGroup);
         SetupGroup();
+    }
+
+    public void UpdateLogic()
+    {
+        if (Behaviour != null)
+        {
+            TimeData time;
+            time.deltaTime = Time.deltaTime;
+            Behaviour.Update(time);
+        }
     }
 
     public void AddUnit(Unit unit)
@@ -67,18 +78,14 @@ public class AIGroup : UnitGroup
         unit.NotifyDeath += RemoveUnit;
     }
 
-    public Type GetFirstUnitType()
+    public Type FirstUnitType
     {
-        return UnitsInGroup.Count > 0 ? UnitsInGroup[0].GetType() : null;
+        get => UnitsInGroup.Count > 0 ? UnitsInGroup[0].GetType() : null;
     }
 
 
     public float TotalInfantryThreat { get; private set; }
     public float TotalCavalryThreat { get; private set; }
     public AIGroup EnemyGroup => enemyGroup;
-
-    public bool IsBusy { get; set; }
-    public float GroupSpeed => UnitsInGroup[0].Info.Speed;
-
-
+    public GroupBehaviour Behaviour { get; set; }
 }

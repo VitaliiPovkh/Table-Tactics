@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public class UnitGroup
@@ -41,16 +43,28 @@ public class UnitGroup
 
     public void Attack(AIUnit enemy)
     {
+        SetTarget(enemy.Unit);
+    }
+
+    public void Attack(SelectableUnit enemy)
+    {
+        SetTarget(enemy.Unit);
+    }
+
+    private void SetTarget(Unit unit)
+    {
+        GroupTarget = unit;
         for (int i = 0; i < unitsInGroup.Count; i++)
         {
-            unitsInGroup[i].Target = enemy;
-            Vector2 direction = (unitsInGroup[i].transform.position - enemy.transform.position).normalized;
-            unitsInGroup[i].MovementScript.MovementDirection = (Vector2)enemy.transform.position + direction * (enemy.transform.lossyScale.y * 0.75f); 
+            unitsInGroup[i].Target = unit;
+            Vector2 direction = (unitsInGroup[i].transform.position - unit.transform.position).normalized;
+            unitsInGroup[i].MovementScript.MovementDirection = (Vector2)unit.transform.position + direction * (unit.transform.lossyScale.y * 0.75f);
         }
     }
+
 
     protected List<Unit> UnitsInGroup => unitsInGroup;
     public Vector2 Position => unitsInGroup[0].transform.position;
     public bool HasArrived => unitsInGroup[0].MovementScript.IsPathFinished;
-
+    public Unit GroupTarget { get; private set; }
 }

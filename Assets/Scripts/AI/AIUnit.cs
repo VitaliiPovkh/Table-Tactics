@@ -46,6 +46,7 @@ public class AIUnit : MonoBehaviour
                 if (ReferenceEquals(unit.Unit.Info, Unit.Info) && !unit.IsInGroup)
                 {
                     unit.Group = group;
+                    unit.TurnOffScanArea();
                     unitsToGroup.Add(unit);
                 }
             }
@@ -65,6 +66,11 @@ public class AIUnit : MonoBehaviour
         group.EnemyGroup.RemoveUnit(unit.Unit);
     }
 
+    public void TurnOffScanArea()
+    {
+        ScanArea.gameObject.SetActive(false);
+    }
+
     public AIGroup Group 
     {
         get => group;
@@ -77,5 +83,8 @@ public class AIUnit : MonoBehaviour
 
     public bool IsInGroup { get; private set; } = false;
     public Unit Unit { get; private set; }
-    public CircleCollider2D ScanArea { get; private set; }
+    private CircleCollider2D ScanArea { get; set; }
+
+    
+
 }

@@ -7,14 +7,14 @@ public class Cavalry : Unit
 
     public override void GetAttacked(IAttackVariant from) => from.Attack(this);
 
-    public override void OnAttackAreaEnter(Collider2D other)
+    public override void OnTriggerEnter2D(Collider2D other)
     {
         if (Target != null && other.TryGetComponent(out AIUnit enemy))
         {
             if (ReferenceEquals(Target, enemy))
             {
-                Charge(Target.Unit);
-                base.OnAttackAreaEnter(other);
+                Charge(Target);
+                base.OnTriggerEnter2D(other);
             } 
         }
     }

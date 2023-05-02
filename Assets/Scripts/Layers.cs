@@ -7,3 +7,9 @@ public enum Layers
     UNITS = 1 << 6,
     ENEMY = 1 << 7
 }
+
+public enum Commands
+{
+    PLAYER,
+    BOT
+}

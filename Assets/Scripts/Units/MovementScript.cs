@@ -33,7 +33,7 @@ public class MovementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AIUnit target = unit.Target;
+        Unit target = unit.Target;
         if (unitsBody.position == movementDirection && target != null && !finalStop)
         {
             Vector2 direction = (unitsBody.position - (Vector2)target.transform.position).normalized;

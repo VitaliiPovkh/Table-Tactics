@@ -722,6 +722,7 @@ MonoBehaviour:
   attackCooldown: 0
   currentHp: 0
   currentAmmo: 0
+  command: 1
 --- !u!114 &3727625666941083200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,8 +749,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   group:
     unitsInGroup: []
-    groupBehaviour: {fileID: 0}
-  scanArea: {fileID: 6395282181182763471}
   unitScanner: {fileID: 0}
 --- !u!114 &4730024159541955307
 MonoBehaviour:

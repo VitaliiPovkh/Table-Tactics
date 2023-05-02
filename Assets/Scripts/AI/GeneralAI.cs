@@ -37,18 +37,20 @@ public class GeneralAI : MonoBehaviour
                 AIUnit leaderAIUnit = allAIUnits.Find(u => ReferenceEquals(u.Unit.Info, unitType) && !u.IsInGroup);
                 if (leaderAIUnit != null)
                 {
-                    allGroups.Add(leaderAIUnit.InitializeAIGroup());
+                    AIGroup group = leaderAIUnit.InitializeAIGroup();
+                    group.Behaviour = new GroupBehaviour(group, this);
+                    allGroups.Add(group);
                 }
                 else break; 
             }
         }
         foreach (AIGroup group in allGroups)
         {
-            if (group.GetFirstUnitType() == typeof(Infantry))
+            if (group.FirstUnitType == typeof(Infantry))
             {
                 infantryGroups.Add(group);
             }
-            if (group.GetFirstUnitType() == typeof(Cavalry))
+            if (group.FirstUnitType == typeof(Cavalry))
             {
                 cavalryGroups.Add(group);
             }
@@ -57,19 +59,28 @@ public class GeneralAI : MonoBehaviour
 
     private void Update()
     {
+        allGroups.ForEach(g =>
+        {
+            g.UpdateLogic();
+        });
     }
 
-    public AIGroup FindScouts()
+    public Vector2 GetEnemyRandomPosition()
     {
-        AIGroup scouts = allGroups[0];
-        foreach (AIGroup group in allGroups)
+        if (allPlayersUnits.Count == 0)
         {
-            if(scouts.GroupSpeed < group.GroupSpeed && !group.IsBusy)
-            {
-                scouts = group;
-            }
+            return Vector2.zero;
         }
-        return !scouts.IsBusy ? scouts : null;
+        return allPlayersUnits[Random.Range(0, allPlayersUnits.Count)].transform.position;
+    }
+
+    public SelectableUnit GetRandomEnemy()
+    {
+        if (allPlayersUnits.Count == 0)
+        {
+            return null;
+        }
+        return allPlayersUnits[Random.Range(0, allPlayersUnits.Count)];
     }
 
     private void Shuffle<T>(List<T> list)
