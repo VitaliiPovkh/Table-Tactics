@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -28,6 +29,16 @@ public class SelectableUnit : MonoBehaviour
     public void Deselect()
     {
         spriteRenderer.color = unitColor;
+    }
+
+    public void DeathEventSubscribe(Action<Unit> action)
+    {
+        Unit.NotifyDeath += action;
+    }
+
+    public void DeathEventUnsubscribe(Action<Unit> action)
+    {
+        Unit.NotifyDeath -= action;
     }
 
     public Unit Unit { get; private set; }

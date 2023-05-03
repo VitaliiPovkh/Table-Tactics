@@ -10,7 +10,7 @@ public class Cavalry : Unit
     {
         if (Target != null && other.TryGetComponent(out AIUnit enemy))
         {
-            if (ReferenceEquals(Target, enemy))
+            if (ReferenceEquals(Target, enemy.Unit))
             {
                 Charge(Target);
                 base.OnTriggerEnter2D(other);

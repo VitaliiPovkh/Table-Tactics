@@ -98,7 +98,10 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         {
             NotifyUntargeting?.Invoke();
             NotifyDeath?.Invoke(this);
-            Destroy(gameObject);
+            StopAllCoroutines();
+
+            gameObject.SetActive(false);
+            Destroy(gameObject, 5);
         }
     }
 
@@ -170,6 +173,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!isActiveAndEnabled) return;
         if (collision.TryGetComponent(out Unit unit))
         {
             if (unit.Command == command) return;
@@ -210,6 +214,10 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
             {
                 if (currentAmmo <= 0) continue;
                 DecreaseAmmo();
+            }
+            if (Target == null)
+            {
+                yield break;
             }
             Target.GetAttacked(this);
             yield return new WaitForSecondsRealtime(attackCooldown);
@@ -263,6 +271,5 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
 
     public float InfantryThreatLevel { get; protected set; }
     public float CavalryThreatLevel { get; protected set; }
-    //public float SiegeThreatLevel => info.CavalryDamageModifire;
     public Commands Command => command;
 }

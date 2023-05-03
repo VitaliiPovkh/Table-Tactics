@@ -13,7 +13,7 @@ public class InputScript : MonoBehaviour
     private Vector2 selectionStartMousePos;
     private Vector2 selectionEndMousePos;
 
-    private UnitGroup unitGroup;
+    [SerializeField] private UnitGroup unitGroup;
 
     private void Start()
     {
@@ -23,10 +23,7 @@ public class InputScript : MonoBehaviour
         unitGroup = new UnitGroup();
     }
 
-    /*TODO:
-     * - Implement movement marker gameobject, so that only AIDestinationSetter could be used 
-     * - Fix one click selection (now it selects all of the units in click area)
-     **/
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(1))
@@ -82,17 +79,6 @@ public class InputScript : MonoBehaviour
 
         Collider2D[] colliders = Physics2D.OverlapAreaAll(selectionStartWorldMousePos, selectionEndWorldMousePos);
 
-        if (selectionStartWorldMousePos == selectionEndWorldMousePos)
-        {
-            SelectableUnit unit = null;
-            new List<Collider2D>(colliders).Find(c => c.TryGetComponent(out unit));
-            if (unit != null)
-            {
-                selectedUnits.Add(unit);
-                unit.Select();
-                return;
-            }
-        }
 
         foreach (Collider2D collider in colliders)
         {
@@ -100,6 +86,11 @@ public class InputScript : MonoBehaviour
             {
                 selectedUnits.Add(unit);
                 unit.Select();
+                unit.DeathEventSubscribe(RemoveFromSelect);
+                if (selectionStartWorldMousePos == selectionEndWorldMousePos)
+                {
+                    break;
+                }
             }
         }
     }
@@ -108,7 +99,9 @@ public class InputScript : MonoBehaviour
     {
         foreach (SelectableUnit unit in selectedUnits)
         {
+            if (unit == null) continue;
             unit.Deselect();
+            unit.DeathEventUnsubscribe(RemoveFromSelect);
         }
         selectedUnits.Clear();
     }
@@ -130,5 +123,9 @@ public class InputScript : MonoBehaviour
         selectionRect.rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, inset, size);
     }
 
-
+    private void RemoveFromSelect(Unit unit)
+    {
+        SelectableUnit selectable = selectedUnits.Find(s => ReferenceEquals(unit, s.Unit));
+        selectedUnits.Remove(selectable);
+    }
 }

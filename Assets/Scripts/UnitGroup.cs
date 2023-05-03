@@ -6,28 +6,51 @@ using UnityEngine;
 [Serializable]
 public class UnitGroup
 {
-    [SerializeField] private List<Unit> unitsInGroup;
+    [SerializeField] private List<Unit> unitsInGroup = new List<Unit>();
 
     public virtual void SetGroup(List<AIUnit> unitsInGroup)
     {
-        this.unitsInGroup = new List<Unit>();
-        foreach (var selectable in unitsInGroup)
+        if (this.unitsInGroup.Count > 0)
         {
-            this.unitsInGroup.Add(selectable.Unit);
+            Unsubscribe();
+            this.unitsInGroup.Clear();
+        }
+        foreach (AIUnit aiUnit in unitsInGroup)
+        {
+            this.unitsInGroup.Add(aiUnit.Unit);
+            aiUnit.Unit.NotifyDeath += RemoveUnit;
         }
     }
 
     public virtual void SetGroup(List<SelectableUnit> unitsInGroup)
     {
-        this.unitsInGroup = new List<Unit>();
-        foreach (var selectable in unitsInGroup)
+        if (this.unitsInGroup.Count > 0)
+        {
+            Unsubscribe();
+            this.unitsInGroup.Clear();
+        }
+        foreach (SelectableUnit selectable in unitsInGroup)
         {
             this.unitsInGroup.Add(selectable.Unit);
+            selectable.Unit.NotifyDeath += RemoveUnit;
+        }
+    }
+
+    private void Unsubscribe()
+    {
+        foreach (Unit unit in unitsInGroup)
+        {
+            if (unit != null)
+            {
+                unit.NotifyDeath -= RemoveUnit;
+            }
         }
     }
 
     public void MoveGroup(Vector2 position, float radius)
     {
+        if (unitsInGroup.Count == 0) return;
+        
         float step = (Mathf.Deg2Rad * 360) / unitsInGroup.Count;
 
         unitsInGroup[0].Target = null;
@@ -52,12 +75,19 @@ public class UnitGroup
 
     private void SetTarget(Unit unit)
     {
+        if (unitsInGroup.Count == 0) return;
+
         GroupTarget = unit;
         for (int i = 0; i < unitsInGroup.Count; i++)
         {
             unitsInGroup[i].Target = unit;
             unitsInGroup[i].MoveToTarget();
         }
+    }
+
+    public void RemoveUnit(Unit unit)
+    {
+        unitsInGroup.Remove(unit);
     }
 
 

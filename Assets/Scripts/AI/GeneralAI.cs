@@ -19,7 +19,25 @@ public class GeneralAI : MonoBehaviour
         allAIUnits.ForEach(u =>
         {
             u.GeneralAI = this;
+            u.Unit.NotifyDeath += RemoveFromAi;
         });
+
+        allPlayersUnits.ForEach(u => 
+        {
+            u.Unit.NotifyDeath += RemoveFromPlayer;
+        });
+    }
+
+    private void RemoveFromAi(Unit unit)
+    {
+        AIUnit aiUnit = allAIUnits.Find(s => ReferenceEquals(unit, s.Unit));
+        allAIUnits.Remove(aiUnit);
+    }
+
+    private void RemoveFromPlayer(Unit unit)
+    {
+        SelectableUnit selectable = allPlayersUnits.Find(s => ReferenceEquals(unit, s.Unit));
+        allPlayersUnits.Remove(selectable);
     }
 
 }
