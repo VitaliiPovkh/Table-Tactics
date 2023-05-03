@@ -22,6 +22,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     private Coroutine attackCycle;
 
     private Unit target;
+    private MovementScript movementScript;
 
     public event Action NotifyUntargeting;
     public event Action<Unit> NotifyDeath;
@@ -29,7 +30,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
 
     private void Awake()
     {
-        MovementScript = GetComponent<MovementScript>();
+        movementScript = GetComponent<MovementScript>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -135,6 +136,20 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         }
 
     }
+    public void Move(Vector2 position)
+    {
+        movementScript.MovementDirection = position;
+    }
+
+    public void MoveToTarget()
+    {
+        if (Target != null)
+        {
+            Vector2 direction = (transform.position - Target.transform.position).normalized;
+            movementScript.MovementDirection = (Vector2)Target.transform.position + direction * (Target.transform.lossyScale.y * 0.75f);
+        }
+        
+    }
 
     public abstract void GetAttacked(IAttackVariant from);
 
@@ -209,7 +224,6 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     public UnitInfo Info => info;
     protected int CurrentAmmo => currentAmmo;
     public bool DoesIgnoreCharge => info.DoesIgnoreCharge;
-    public MovementScript MovementScript { get; private set; }
     public Unit Target 
     {
         get => target;
@@ -250,7 +264,5 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     public float InfantryThreatLevel { get; protected set; }
     public float CavalryThreatLevel { get; protected set; }
     //public float SiegeThreatLevel => info.CavalryDamageModifire;
-
-    public bool IsInGroup { get; set; } = false;
     public Commands Command => command;
 }

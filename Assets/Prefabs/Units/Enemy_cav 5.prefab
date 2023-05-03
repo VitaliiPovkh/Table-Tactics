@@ -868,7 +868,6 @@ MonoBehaviour:
   currentHp: 0
   currentAmmo: 0
   command: 1
-  chargeModifire: 2.08
 --- !u!114 &3727625666941083200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,8 +905,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed02e8c785a7894a96eb4c4680ef6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group:
-    unitsInGroup: []
   unitScanner: {fileID: 0}
 --- !u!114 &248603926265087649
 MonoBehaviour:

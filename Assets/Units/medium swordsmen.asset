@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: medium swordsmen
   m_EditorClassIdentifier: 
   unitPrice: 0
-  unitName: 
-  hp: 150
-  speed: 7
-  attackRange: 0
-  damage: 0
-  attackCooldown: 0
-  infantryModifire: 1
-  cavalryModifire: 1
-  siegeModifire: 1
+  unitName: Sworsmen medium
+  hp: 350
+  speed: 6.5
+  attackRange: 1
+  damage: 11
+  attackCooldown: 1
+  infantryModifire: 1.45
+  cavalryModifire: 0.95
+  siegeModifire: 0
   buildingModifire: 0
   doesIgnoreCharge: 0
   heaviness: 1

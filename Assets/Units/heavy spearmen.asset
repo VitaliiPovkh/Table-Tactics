@@ -15,13 +15,13 @@ MonoBehaviour:
   unitPrice: 150
   unitName: Spearman heavy
   hp: 400
-  speed: 3.16
+  speed: 5.15
   attackRange: 1.62
   damage: 15
   attackCooldown: 1.64
-  infantryModifire: 0.68
-  cavalryModifire: 2.06
-  siegeModifire: 0.76
+  infantryModifire: 1
+  cavalryModifire: 2
+  siegeModifire: 0
   buildingModifire: 0
   doesIgnoreCharge: 1
   heaviness: 2

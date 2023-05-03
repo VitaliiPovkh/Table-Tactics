@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: heavy sword cavalry
   m_EditorClassIdentifier: 
   unitPrice: 0
-  unitName: Cavalry with spears medium
-  hp: 300
-  speed: 7
-  attackRange: 1.64
+  unitName: Cavalry with swords heavy
+  hp: 320
+  speed: 9
+  attackRange: 1.22
   damage: 17
-  attackCooldown: 2
-  infantryModifire: 2.03
-  cavalryModifire: 0.47
-  siegeModifire: 0.9
-  buildingModifire: 0.31
+  attackCooldown: 1.35
+  infantryModifire: 1.5
+  cavalryModifire: 0.85
+  siegeModifire: 0
+  buildingModifire: 0
   doesIgnoreCharge: 1
   heaviness: 2
   emblem: {fileID: 21300000, guid: 5aef6f92e28d8cc4b9098677c4eb4d86, type: 3}

@@ -854,7 +854,7 @@ MonoBehaviour:
   attackCooldown: 0
   currentHp: 0
   currentAmmo: 0
-  chargeModifire: 4.62
+  command: 0
 --- !u!114 &3727625666941083200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -920,7 +920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f85ded6df9dfa6428c39475381f2d6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanArea: {fileID: 5456452659072954678}
 --- !u!50 &482986989885217600
 Rigidbody2D:
   serializedVersion: 4

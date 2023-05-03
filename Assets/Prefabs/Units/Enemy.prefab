@@ -808,8 +808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed02e8c785a7894a96eb4c4680ef6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group:
-    unitsInGroup: []
   unitScanner: {fileID: 0}
 --- !u!114 &4730024159541955307
 MonoBehaviour:

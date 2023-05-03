@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
+
 
 [Serializable]
 public class UnitGroup
@@ -32,12 +31,12 @@ public class UnitGroup
         float step = (Mathf.Deg2Rad * 360) / unitsInGroup.Count;
 
         unitsInGroup[0].Target = null;
-        unitsInGroup[0].MovementScript.MovementDirection = position;
+        unitsInGroup[0].Move(position);
         for (int i = 1; i < unitsInGroup.Count; i++)
         {
             unitsInGroup[i].Target = null;
             Vector2 posOnCircle = new Vector2(Mathf.Sin(i * step), Mathf.Cos(i * step)) * radius;
-            unitsInGroup[i].MovementScript.MovementDirection = posOnCircle + position;
+            unitsInGroup[i].Move(posOnCircle + position);
         }
     }
 
@@ -57,14 +56,12 @@ public class UnitGroup
         for (int i = 0; i < unitsInGroup.Count; i++)
         {
             unitsInGroup[i].Target = unit;
-            Vector2 direction = (unitsInGroup[i].transform.position - unit.transform.position).normalized;
-            unitsInGroup[i].MovementScript.MovementDirection = (Vector2)unit.transform.position + direction * (unit.transform.lossyScale.y * 0.75f);
+            unitsInGroup[i].MoveToTarget();
         }
     }
 
 
     protected List<Unit> UnitsInGroup => unitsInGroup;
     public Vector2 Position => unitsInGroup[0].transform.position;
-    public bool HasArrived => unitsInGroup[0].MovementScript.IsPathFinished;
     public Unit GroupTarget { get; private set; }
 }

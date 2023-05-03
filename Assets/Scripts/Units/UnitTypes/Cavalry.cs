@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Cavalry : Unit
 {
-    [Range(1f, 5f)]
-    [SerializeField] private float chargeModifire = 2;
+    
 
     public override void GetAttacked(IAttackVariant from) => from.Attack(this);
 
@@ -21,15 +20,19 @@ public class Cavalry : Unit
 
     private void Charge(Unit enemy)
     {
-        if (!enemy.DoesIgnoreCharge)
+        if (!enemy.DoesIgnoreCharge && Info is MeleeUnitInfo)
         {
-            enemy.RecieveDamage(Info.Damage * chargeModifire - Info.Damage);
+            enemy.RecieveDamage(Info.Damage * ((MeleeUnitInfo)Info).ChargeModifire - Info.Damage);
         }
     }
 
     protected override void RecalculateThreat()
     {
         base.RecalculateThreat();
-        InfantryThreatLevel *= chargeModifire;
+        if (Info is MeleeUnitInfo)
+        {
+            InfantryThreatLevel *= ((MeleeUnitInfo)Info).ChargeModifire;
+        }
+        
     }
 }
