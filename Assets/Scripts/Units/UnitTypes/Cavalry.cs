@@ -22,7 +22,7 @@ public class Cavalry : Unit
     {
         if (!enemy.DoesIgnoreCharge && Info is MeleeUnitInfo)
         {
-            enemy.RecieveDamage(Info.Damage * ((MeleeUnitInfo)Info).ChargeModifire - Info.Damage);
+            enemy.RecieveDamage(Info.Damage * ((MeleeUnitInfo)Info).ChargeModifire);
         }
     }
 

@@ -105,6 +105,6 @@ public class UnitBehaviour
         return BehaviourTreeStatus.Running;
     }
 
-    public GeneralAI GeneralAI { get; set; }
+    public MapInfo GeneralAI { get; set; }
     
 }

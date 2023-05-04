@@ -8,7 +8,7 @@ public class AIUnit : MonoBehaviour
     [SerializeField] private UnitScanner unitScanner;
 
     private UnitBehaviour groupBehaviour;
-    private GeneralAI generalAI;
+    private MapInfo generalAI;
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class AIUnit : MonoBehaviour
     public bool IsInGroup { get; private set; } = false;
     public Unit Unit { get; private set; }
     private CircleCollider2D ScanArea { get; set; }
-    public GeneralAI GeneralAI 
+    public MapInfo GeneralAI 
     { 
         get => generalAI;
         set

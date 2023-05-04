@@ -16,6 +16,11 @@ public class CameraScript : MonoBehaviour
 
     private Vector2 startMousePosition;
 
+    private float maxVertical = 70f;
+    private float minVertical = -286;
+
+    private float maxHorizontal = 416f;
+    private float minHorizontal = -97f;
 
     private void LateUpdate()
     {
@@ -23,6 +28,25 @@ public class CameraScript : MonoBehaviour
         KeysMovement();
         BorderMovement();
         CameraZoom();
+
+        Vector3 fixedPosition = transform.position;
+        if (transform.position.x > maxHorizontal)
+        {
+            fixedPosition = new Vector3(maxHorizontal, fixedPosition.y, fixedPosition.z);
+        }
+        if (transform.position.x < minHorizontal)
+        {
+            fixedPosition = new Vector3(minHorizontal, fixedPosition.y, fixedPosition.z);
+        }
+        if (transform.position.y > maxVertical)
+        {
+            fixedPosition = new Vector3(fixedPosition.x, maxVertical, fixedPosition.z);
+        }
+        if (transform.position.y < minVertical)
+        {
+            fixedPosition = new Vector3(fixedPosition.x, minVertical, fixedPosition.z);
+        }
+        transform.position = fixedPosition;
     }
 
     private void WheelMovement()

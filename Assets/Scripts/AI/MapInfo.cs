@@ -4,8 +4,10 @@ using System.Linq;
 
 using UnityEngine;
 
-public class GeneralAI : MonoBehaviour
+public class MapInfo : MonoBehaviour
 {
+    [SerializeField] private UIController uiController;
+
     [SerializeField] private List<SelectableUnit> allPlayersUnits;
     [SerializeField] private List<AIUnit> allAIUnits;
 
@@ -32,12 +34,20 @@ public class GeneralAI : MonoBehaviour
     {
         AIUnit aiUnit = allAIUnits.Find(s => ReferenceEquals(unit, s.Unit));
         allAIUnits.Remove(aiUnit);
+        if (allAIUnits.Count == 0)
+        {
+            uiController.ShowVictory();
+        }
     }
 
     private void RemoveFromPlayer(Unit unit)
     {
         SelectableUnit selectable = allPlayersUnits.Find(s => ReferenceEquals(unit, s.Unit));
         allPlayersUnits.Remove(selectable);
+        if (allPlayersUnits.Count == 0)
+        {
+            uiController.ShowDefeat();
+        }
     }
 
 }
