@@ -7,8 +7,8 @@ public class AIUnit : MonoBehaviour
 {
     [SerializeField] private UnitScanner unitScanner;
 
-    private UnitBehaviour groupBehaviour;
-    private MapInfo generalAI;
+    private UnitBehaviour unitBehaviour;
+    private MapInfo mapInfo;
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class AIUnit : MonoBehaviour
         ScanArea = transform.GetChild(transform.childCount - 1).GetComponent<CircleCollider2D>();
         ScanArea.gameObject.SetActive(false);
 
-        groupBehaviour = new UnitBehaviour(Unit);
+        unitBehaviour = new UnitBehaviour(Unit);
     }
 
 
@@ -31,21 +31,19 @@ public class AIUnit : MonoBehaviour
 
     private void Update()
     {
-        if (groupBehaviour == null) return;
-        groupBehaviour.Update(new TimeData(Time.deltaTime));
+        if (unitBehaviour == null) return;
+        unitBehaviour.Update(new TimeData(Time.deltaTime));
     }
 
-
-    public bool IsInGroup { get; private set; } = false;
     public Unit Unit { get; private set; }
     private CircleCollider2D ScanArea { get; set; }
-    public MapInfo GeneralAI 
+    public MapInfo MapInfo 
     { 
-        get => generalAI;
+        get => mapInfo;
         set
         {
-            generalAI = value;
-            groupBehaviour.GeneralAI = value;
+            mapInfo = value;
+            unitBehaviour.MapInfo = value;
         }
     }
 

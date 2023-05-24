@@ -11,8 +11,6 @@ public class UnitBehaviour
 
     private Unit unit;
 
-    private SelectableUnit enemy;
-
 
     private float lastUpdateTime = 0f;
     private float pathCalcCooldown = 3f;
@@ -46,7 +44,7 @@ public class UnitBehaviour
 
         Unit potentialEnemy = null;
         float minDistance = float.MaxValue;
-        foreach (SelectableUnit playerUnit in GeneralAI.PlayerUnits)
+        foreach (SelectableUnit playerUnit in MapInfo.PlayerUnits)
         {
             if (playerUnit == null)
             {
@@ -105,6 +103,6 @@ public class UnitBehaviour
         return BehaviourTreeStatus.Running;
     }
 
-    public MapInfo GeneralAI { get; set; }
+    public MapInfo MapInfo { get; set; }
     
 }

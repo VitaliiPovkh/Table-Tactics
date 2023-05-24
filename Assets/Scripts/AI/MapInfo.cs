@@ -20,7 +20,7 @@ public class MapInfo : MonoBehaviour
 
         allAIUnits.ForEach(u =>
         {
-            u.GeneralAI = this;
+            u.MapInfo = this;
             u.Unit.NotifyDeath += RemoveFromAi;
         });
 

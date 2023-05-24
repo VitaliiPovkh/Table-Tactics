@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -24,7 +25,8 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
     private Unit target;
     private MovementScript movementScript;
 
-    public event Action NotifyUntargeting;
+    private event Action NotifyUntargeting;
+
     public event Action<Unit> NotifyDeath;
     public event Action NotifyHPChange;
 
@@ -34,7 +36,7 @@ public abstract class Unit : MonoBehaviour, IAttackVariant
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    protected void Start()
+    private void Start()
     {
         spriteRenderer.sprite = info.BaseSprite;
 

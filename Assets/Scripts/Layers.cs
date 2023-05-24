@@ -8,8 +8,4 @@ public enum Layers
     ENEMY = 1 << 7
 }
 
-public enum Commands
-{
-    PLAYER,
-    BOT
-}
+

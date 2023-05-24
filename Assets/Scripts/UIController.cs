@@ -12,10 +12,14 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private Button quitBtn;
 
+    [SerializeField] private InputScript inputScript;
     [SerializeField] private CameraScript cameraScript;
 
     private void InitializeGUI()
     {
+        inputScript.enabled = false;
+        cameraScript.enabled = false;
+
         shadow.gameObject.SetActive(true);
         quitBtn.gameObject.SetActive(true);
     }
