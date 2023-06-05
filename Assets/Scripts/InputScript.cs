@@ -9,6 +9,7 @@ public class InputScript : MonoBehaviour
     [SerializeField] private List<SelectableUnit> selectedUnits = new List<SelectableUnit>();
     [Range(0f, 30f)]
     [SerializeField] private float formationRadius = 15f;
+    [SerializeField] private UIController controller;
 
     private Vector2 selectionStartMousePos;
     private Vector2 selectionEndMousePos;
@@ -59,6 +60,11 @@ public class InputScript : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             selectionRect.gameObject.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            controller.ShowPause();
         }
     }
 
